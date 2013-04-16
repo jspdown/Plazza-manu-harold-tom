@@ -1,15 +1,21 @@
-#ifndef __UNIX_THREAD_HPP__
-#define __UNIX_THREAD_HPP__
+#ifndef __UNIX_THREAD_HH__
+#define __UNIX_THREAD_HH__
 
-class UnixThread
+#include <pthread.h>
+
+#include "IThread.hh"
+
+class UnixThread : public IThread
 {
+private:
+  pthread_t	thread;
+
 public:
-	UnixThread();
+	UnixThread(pthread_attr_t attr, void *(*func)(void *), void *arg);
   	~UnixThread();
-  int	create();
   void	exit();
   int	join();
   int	detach();
 };
 
-#endif // __UNIX_THREAD_HPP__
+#endif // __UNIX_THREAD_HH__

@@ -1,11 +1,11 @@
-#ifndef __UNIX_MUTEX_HPP__
-#define __UNIX_MUTEX_HPP__
+#ifndef __UNIX_MUTEX_HH__
+#define __UNIX_MUTEX_HH__
 
 #include <pthread.h>
 
-#include "IMutex.hpp"
+#include "IMutex.hh"
 
-class UnixMutex : public Imutex
+class UnixMutex : public IMutex
 {
 private:
   pthread_mutex_t	mutex;
@@ -18,4 +18,4 @@ public:
   int	unlock();
 };
 
-#endif // __UNIX_MUTEX_HPP__
+#endif // __UNIX_MUTEX_HH__

@@ -1,7 +1,7 @@
 #ifndef __UNIX_PROCESS_HPP__
 #define __UNIX_PROCESS_HPP__
 
-#include "IProcess.hpp"
+#include "IProcess.hh"
 
 class UnixProcess : public IProcess
 {
@@ -10,9 +10,10 @@ private:
 
 public:
 		UnixProcess();
+		UnixProcess(pid_t pid);
 		~UnixProcess();
   IProcess *	fork();
-  void		exit();
+  void		exit(int return_value);
 
 };
 

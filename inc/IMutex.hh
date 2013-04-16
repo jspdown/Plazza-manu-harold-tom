@@ -1,5 +1,5 @@
-#ifndef __I_MUTEX_HPP__
-#define __I_MUTEX_HPP__
+#ifndef __I_MUTEX_HH__
+#define __I_MUTEX_HH__
 
 class IMutex
 {
@@ -10,4 +10,4 @@ protected:
   virtual int	unlock() = 0;
 };
 
-#endif // __I_MUTEX_HPP__
+#endif // __I_MUTEX_HH__

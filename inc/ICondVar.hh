@@ -1,5 +1,5 @@
-#ifndef __I_CONDVAR_HPP__
-#define __I_CONDVAR_HPP__
+#ifndef __I_CONDVAR_HH__
+#define __I_CONDVAR_HH__
 
 class ICondVar
 {
@@ -11,4 +11,4 @@ protected:
   virtual int	timedwait() = 0;
 };
 
-#endif //__I_CONDVAR_HPP__
+#endif //__I_CONDVAR_HH__

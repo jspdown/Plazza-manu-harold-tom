@@ -3,11 +3,13 @@
 
 #include <pthread.h>
 
-#include "ICondVar.hpp"
+#include "ICondVar.hh"
 
-class UnixCondVar
+class UnixCondVar: public ICondVar
 {
+private:
   pthread_cond_t	condvar;
+
 public:
   	~UnixCondVar();
 	UnixCondVar();

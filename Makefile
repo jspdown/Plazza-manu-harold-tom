@@ -7,7 +7,10 @@ OBJ_EXT	=	o
 INC_PATH	=	./inc/
 SRC_PATH	=	./src/
 
-SRC	=	
+SRC_PIZZA	=	$(SRC_PATH)Pizza/
+
+SRC	=	$(SRC_PIZZA)Pizza.cpp \
+		$(SRC_PIZZA)PizzaHandler.cpp
 
 
 OBJ	=	$(SRC:.$(SRC_EXT)=.$(OBJ_EXT))
@@ -16,7 +19,7 @@ INC	=	-I $(INC_PATH)
 
 CC	=	g++
 
-CPPFLAGS	+=	-Wall -W $(INC) -g -ldl
+CPPFLAGS	+=	-Wall -W $(INC)
 
 
 # Rules

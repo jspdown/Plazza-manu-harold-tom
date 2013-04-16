@@ -1,0 +1,22 @@
+
+1st step:
+
+manu:
+	input/output
+	competitiveAcessAbstraction
+harold:
+	pizzaHandler/pizza/enums
+	request/trame
+tom:
+	interface graphique
+
+2nd step:
+    
+
+
+reception
+cook
+threadpool
+kitchen
+
+resources/loader

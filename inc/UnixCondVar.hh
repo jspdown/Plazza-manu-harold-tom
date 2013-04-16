@@ -9,7 +9,8 @@ class UnixCondVar
 {
   pthread_cond_t	condvar;
 public:
-  	~ICondVar();
+  	~UnixCondVar();
+	UnixCondVar();
   int	signal();
   int	broadcast();
   int	wait();

@@ -4,7 +4,7 @@
 class ICondVar
 {
 protected:
-  virtual	~ICondVar() = 0;
+  virtual	~ICondVar(){};
   virtual int	signal() = 0;
   virtual int	broadcast() = 0;
   virtual int	wait() = 0;

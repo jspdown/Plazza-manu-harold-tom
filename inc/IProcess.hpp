@@ -4,7 +4,7 @@
 class IProcess
 {
 protected:
-  virtual		~IProcess() = 0;
+  virtual		~IProcess(){};
   virtual IProcess *	fork() = 0;
   virtual void		quit() = 0;
 };

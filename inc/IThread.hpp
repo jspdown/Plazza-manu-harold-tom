@@ -4,7 +4,7 @@
 class IThread
 {
 protected:
-  virtual	~IThread() = 0;
+  virtual	~IThread(){};
   virtual int	create() = 0;
   virtual void	exit() = 0;
   virtual int	join() = 0;

@@ -1,14 +1,14 @@
 #ifndef __INPUT_OUTPUT_HH__
 #define __INPUT_OUTPUT_HH__
 
-#include "IInput.hh"
-#include "IOutput.hh"
+#include <istream>
+#include <ostream>
 
 class InputOutput
 {
 private:
-  IInput *	in;
-  IOutput *	out;
+  std::istream &	in;
+  std::ostream &	out;
 
 public:
   std::string &	read();

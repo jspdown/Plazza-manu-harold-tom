@@ -29,9 +29,9 @@ enum	TypeIngredient
     Goat_cheese = 4,
     Gruyere = 8,
     Ham = 16,
-    mushroom = 32,
-    steak = 64,
-    tomato = 128
+    Mushroom = 32,
+    Steak = 64,
+    Tomato = 128
   };
 
 class	Pizza

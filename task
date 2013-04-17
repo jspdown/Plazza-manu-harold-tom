@@ -2,11 +2,11 @@
 1st step:
 
 manu:
-	input/output
-	competitiveAcessAbstraction
+	input/output			OK
+	competitiveAcessAbstraction	OK
 harold:
-	pizzaHandler/pizza/enums
-	request/trame
+	pizzaHandler/pizza/enums	OK
+	request/trame			OK
 tom:
 	interface graphique
 

@@ -3,14 +3,36 @@ NAME	=	plazza
 SRC_EXT	=	cpp
 OBJ_EXT	=	o
 
+UNIT	=	none
+
 
 INC_PATH	=	./inc/
 SRC_PATH	=	./src/
+SRC_UNIT	=	./unit/
 
 SRC_PIZZA	=	$(SRC_PATH)Pizza/
+SRC_REQUEST	=	$(SRC_PATH)Request/
+SRC_UTILS	=	$(SRC_PATH)Utils/
 
 SRC	=	$(SRC_PIZZA)Pizza.cpp \
-		$(SRC_PIZZA)PizzaHandler.cpp
+		$(SRC_PIZZA)PizzaHandler.cpp \
+		$(SRC_REQUEST)ARequest.cpp \
+		$(SRC_REQUEST)Destroy.cpp \
+		$(SRC_REQUEST)SendPizza.cpp \
+		$(SRC_REQUEST)GetPizza.cpp \
+		$(SRC_REQUEST)GetStat.cpp \
+		$(SRC_REQUEST)SendStat.cpp \
+		$(SRC_REQUEST)RequestHandler.cpp \
+		$(SRC_UTILS)Convert.cpp
+
+ifeq ($(UNIT), Pizza)
+	SRC += $(SRC_UNIT)pizza.cpp
+endif
+
+ifeq ($(UNIT), Request)
+	SRC += $(SRC_UNIT)Request.cpp
+endif
+
 
 
 OBJ	=	$(SRC:.$(SRC_EXT)=.$(OBJ_EXT))

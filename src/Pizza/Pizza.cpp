@@ -33,6 +33,7 @@ std::string			Pizza::getSizeText()	const
   in[XXL] = std::string("XXL");
   std::map<TaillePizza, std::string>::iterator	it;
 
+  
   it = in.find(this->size);
   if (it == in.end())
     return (std::string(""));

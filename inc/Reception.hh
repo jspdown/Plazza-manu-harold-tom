@@ -1,13 +1,13 @@
 #ifndef __RECEPTION_HH__
 #define __RECEPTION_HH__
 
-#include <deque>
-#include <utility>
+#include	<deque>
+#include	<utility>
 
-#include "IProcess.hh"
-//#include "InputOutput.hh"
-#include "NamedPipe.hh"
-#include "Pizza.hh"
+#include	"IProcess.hh"
+//#include	"InputOutput.hh"
+#include	"NamedPipe.hh"
+#include	"Pizza.hh"
 
 class Reception
 {
@@ -21,11 +21,11 @@ public:
 	Reception();
 	~Reception();
   void	createKitchen();
-  void	deliverPizza(Pizza *);
+  void	deliverPizza(Pizza *) const;
   void	run();
   void	destroyKitchen(int);
-  void	transferOrder();
-  int	checkStatus();
+  void	transferOrder() const;
+  int	checkStatus() const;
 };
 
 #endif // __RECEPTION_HH__

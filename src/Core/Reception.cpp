@@ -34,13 +34,15 @@ Reception::~Reception()
 //   this->pipe.push_back(pipes);
 //   son = this->process->fork();
 //   son->setPipe(pipes);
-//   new Kitchen(&(pipes.first), &(pipes.second));
+//   Kitchen * k = new Kitchen(&(pipes.first), &(pipes.second));
+//   k->run();
 //   this->processes.push_back(son);
 //   num += 1;
 // }
 
-void	Reception::deliverPizza(Pizza *pizza)
+void	Reception::deliverPizza(Pizza *pizza) const
 {
+  // warning : utiliser attribut io
   std::cout << "Service d'une "
 	    << pizza->getName()
 	    << " "
@@ -70,12 +72,12 @@ void	Reception::run()
 //   this->pipe.erase(this->pipe.begin() + pos);
 // }
 
-void	Reception::transferOrder()
+void	Reception::transferOrder() const
 {
 
 }
 
-int	Reception::checkStatus()
+int	Reception::checkStatus() const
 {
   std::vector<std::string>	trame;
   return (1);

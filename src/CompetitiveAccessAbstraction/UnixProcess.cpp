@@ -1,10 +1,10 @@
-
 #include <iostream>
 #include <sys/types.h>
 #include <unistd.h>
+#include <algorithm>
+
 #include "UnixProcess.hh"
 #include "CmdLineParse.hh"
-#include <algorithm>
 
 UnixProcess::UnixProcess()
 {
@@ -35,7 +35,7 @@ IProcess *		UnixProcess::fork()
   return (0);
 }
 
-void		UnixProcess::quit(int return_value)
+void			UnixProcess::quit(int return_value)
 {
   exit(return_value);
 }
@@ -56,7 +56,7 @@ void			UnixProcess::put(const std::string & msg)
       //  std::for_each(trame.begin(), trame.end(), (this->pipes.first())->put);
 }
 
-std::string    	UnixProcess::get()
+const std::string &    	UnixProcess::get()
 {
   std::string	msg;
 

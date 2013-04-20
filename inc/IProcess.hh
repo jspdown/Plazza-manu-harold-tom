@@ -3,8 +3,8 @@
 
 #include	<utility>
 #include	<string>
-#include	"NamedPipe.hh"
 
+#include	"NamedPipe.hh"
 
 class IProcess
 {
@@ -13,7 +13,7 @@ public:
   virtual IProcess *		fork() = 0;
   virtual void			quit(int) = 0;
   virtual void			put(const std::string &) = 0;
-  virtual std::string		get() = 0;
+  virtual const std::string &  	get() = 0;
   virtual void			setPipe(std::pair<NamedPipe *, NamedPipe *> &) = 0;
 };
 

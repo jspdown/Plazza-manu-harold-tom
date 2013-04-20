@@ -1,10 +1,10 @@
 #ifndef __UNIX_PROCESS_HPP__
 #define __UNIX_PROCESS_HPP__
 
-#include <utility>
+#include	<utility>
 
-#include "IProcess.hh"
-#include "NamedPipe.hh"
+#include	"IProcess.hh"
+#include	"NamedPipe.hh"
 
 class UnixProcess : public IProcess
 {
@@ -13,13 +13,13 @@ private:
   std::pair<NamedPipe *, NamedPipe *>	pipes;
 
 public:
-			UnixProcess();
-			UnixProcess(pid_t pid);
-  virtual		~UnixProcess();
-  virtual IProcess *   	fork();
-  virtual void	       	quit(int return_value);
-  virtual void	       	put(const std::string &);
-  virtual std::string	get();
+				UnixProcess();
+				UnixProcess(pid_t pid);
+  virtual			~UnixProcess();
+  virtual IProcess *		fork();
+  virtual void			quit(int return_value);
+  virtual void			put(const std::string &);
+  virtual const std::string &	get();
   virtual void			setPipe(std::pair<NamedPipe *, NamedPipe *> &);
 };
 

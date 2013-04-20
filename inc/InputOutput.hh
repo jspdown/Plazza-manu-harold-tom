@@ -1,8 +1,8 @@
 #ifndef __INPUT_OUTPUT_HH__
 #define __INPUT_OUTPUT_HH__
 
-#include <istream>
-#include <ostream>
+#include	<istream>
+#include	<ostream>
 
 class InputOutput
 {
@@ -11,8 +11,10 @@ private:
   std::ostream &	out;
 
 public:
-  std::string &	read();
-  void		write(const std::string &);
+			InputOutput();
+			~InputOutput();
+  const std::string &	read();
+  void			write(const std::string &);
 };
 
 #endif // __INPUT_OUTPUT_HH__

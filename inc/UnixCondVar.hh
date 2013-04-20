@@ -1,9 +1,9 @@
 #ifndef __UNIX_CONDVAR_HPP__
 #define __UNIX_CONDVAR_HPP__
 
-#include <pthread.h>
+#include	<pthread.h>
 
-#include "ICondVar.hh"
+#include	"ICondVar.hh"
 
 class UnixCondVar: public ICondVar
 {

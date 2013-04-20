@@ -13,18 +13,19 @@ class Reception
 {
 private:
   IProcess						*process;
+  int							nbr_cooks;
   //  InputOutput						io;
   std::deque<std::pair<NamedPipe *, NamedPipe *> >	pipe;
   std::deque<IProcess *>				processes;
 
 public:
-	Reception();
+	Reception(int nbr_cooks);
 	~Reception();
   void	createKitchen();
   void	deliverPizza(Pizza *) const;
   void	run();
   void	destroyKitchen(int);
-  void	transferOrder(const std::string &) const;
+  void	getOrder();
   int	checkStatus() const;
 };
 

@@ -8,10 +8,10 @@
 #include "Reception.hh"
 #include "UnixProcess.hh"
 #include "IProcess.hh"
-//#include "Kitchen.hh"
+#include "Kitchen.hh"
 
-Reception::Reception()
-  : process(new UnixProcess())
+Reception::Reception(int nbr_cooks)
+  : process(new UnixProcess()), nbr_cooks(nbr_cooks)
 {
 }
 
@@ -19,27 +19,29 @@ Reception::~Reception()
 {
 }
 
-// void	Reception::createKitchen()
-// {
-//   static int				num;
-//   std::stringstream			namein;
-//   std::stringstream			nameout;
-//   std::pair<NamedPipe *, NamedPipe *>	pipes;
-//   IProcess *				son;
+void	Reception::createKitchen()
+{
+  static int				num;
+  std::stringstream			namein;
+  std::stringstream			nameout;
+  std::pair<NamedPipe *, NamedPipe *>	pipes;
+  IProcess *				son;
 
-//   namein << "InputKitchen" << num;
-//   nameout << "OutputKitchen" << num;
-//   NamedPipe in(namein.str());
-//   NamedPipe out(nameout.str());
-//   pipes = std::make_pair(&in, &out);
-//   this->pipe.push_back(pipes);
-//   son = this->process->fork();
-//   son->setPipe(pipes);
-//   Kitchen * k = new Kitchen(&(pipes.first), &(pipes.second));
-//   k->run();
-//   this->processes.push_back(son);
-//   num += 1;
-// }
+  namein << "InputKitchen" << num;
+  nameout << "OutputKitchen" << num;
+  NamedPipe in(namein.str());
+  NamedPipe out(nameout.str());
+  pipes = std::make_pair(&in, &out);
+  this->pipe.push_back(pipes);
+  if ((son = this->process->fork()))
+    {
+      son->setPipe(pipes);
+      Kitchen * k = new Kitchen(this->nbr_cooks, pipes.first, pipes.second);
+      k->run();
+      this->processes.push_back(son);
+    }
+  num += 1;
+}
 
 void	Reception::deliverPizza(Pizza *pizza) const
 {
@@ -54,33 +56,38 @@ void	Reception::deliverPizza(Pizza *pizza) const
 
 void	Reception::run()
 {
-  std::string			msg;
-  std::vector<std::string>	tramecmd;
+  bool	done = false;
 
-  while (true)
+  this->createKitchen();
+  while (!done)
     {
-      std::getline (std::cin, msg);
-      tramecmd = CmdLineParse::CmdLineToTrame(msg);
-      for (size_t i = 0; i < tramecmd.size(); ++i)
-	{
-	  std::cout << tramecmd[i] << std::endl;
-	}
+      this->getOrder();
     }
 }
 
-// void	Reception::destroyKitchen(int pos)
-// {
-//   this->pipe.erase(this->pipe.begin() + pos);
-// }
-
-void	Reception::transferOrder(const std::string & msg) const
+void	Reception::destroyKitchen(int pos)
 {
-  int	pos;
+  this->pipe.erase(this->pipe.begin() + pos);
+}
 
-  msg = Trame::pack(msg);
-  while ((pos = this->checkStatus()) < 0)
-    this->createKitchen();
-  (this->pipe[pos].first)->put(msg);
+void	Reception::getOrder()
+{
+  int				pos;
+  std::string			msg;
+  std::vector<std::string>	tramecmd;
+
+  std::getline (std::cin, msg);
+  tramecmd = CmdLineParse::CmdLineToTrame(msg);
+  for (size_t i = 0; i < tramecmd.size(); ++i)
+    {
+      if ((pos = this->checkStatus()) < 0)
+	{
+	  this->createKitchen();
+	  pos = this->checkStatus();
+	}
+      std::cout << tramecmd[i] << std::endl;
+      this->pipe[pos].first->put(tramecmd[i]);
+    }
 }
 
 int	Reception::checkStatus() const

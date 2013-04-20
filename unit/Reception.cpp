@@ -4,7 +4,7 @@
 
 int	main()
 {
-  Reception	rp;
+  Reception	rp(5);
 
   rp.run();
 }

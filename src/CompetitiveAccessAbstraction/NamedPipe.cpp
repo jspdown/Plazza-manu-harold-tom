@@ -1,3 +1,4 @@
+#include <iostream>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -8,9 +9,13 @@
 NamedPipe::NamedPipe(const std::string &name)
   : name(name)
 {
+  std::cout << name << std::endl;
   if (mkfifo(name.c_str(), S_IRWXU) < 0)
     throw NamedPipe::NamedPipeError(); //warning
   this->file.open(name.c_str(), std::fstream::in | std::fstream::out | std::fstream::trunc);
+  if (!this->file.good())
+    throw NamedPipe::NamedPipeError();
+  this->file << "lalal" << std::endl;
 }
 
 NamedPipe::~NamedPipe()
@@ -27,7 +32,7 @@ std::string	NamedPipe::get()
 
 void	NamedPipe::put(const std::string &msg)
 {
-  file << msg;
+  this->file << msg;
 }
 
 const char * NamedPipe::NamedPipeError::what() const throw()

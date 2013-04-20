@@ -48,7 +48,8 @@ SRC	= 	$(SRC_CORE)Reception.cpp \
 		$(SRC_CORE)Manager.cpp \
 		$(SRC_CORE)Kitchen.cpp \
 		$(SRC_REQUEST)Trame.cpp\
-		$(SRC_UNIT)Kitchen.cpp
+		$(SRC_CORE)Reception.cpp\
+		$(SRC_UNIT)Reception.cpp
 
 ifeq ($(UNIT), Pizza)
 	SRC += $(SRC_UNIT)pizza.cpp
@@ -66,7 +67,7 @@ INC	=	-I $(INC_PATH)
 
 CC	=	g++
 
-CPPFLAGS	+=	-Wall -W -lpthread $(INC)
+CPPFLAGS	+=	-Wall -W -lpthread -g3 $(INC)
 
 
 # Rules

@@ -1,10 +1,13 @@
-
+#include <sstream>
 #include <iostream>
 #include <vector>
+#include <utility>
 
 #include "CmdLineParse.hh"
 #include "Reception.hh"
 #include "UnixProcess.hh"
+#include "IProcess.hh"
+//#include "Kitchen.hh"
 
 Reception::Reception()
   : process(new UnixProcess())
@@ -20,28 +23,31 @@ Reception::~Reception()
 //   static int				num;
 //   std::stringstream			namein;
 //   std::stringstream			nameout;
-//   std::pair<NamedPipe, NamedPipe>	pipes;
+//   std::pair<NamedPipe *, NamedPipe *>	pipes;
 //   IProcess *				son;
 
 //   namein << "InputKitchen" << num;
 //   nameout << "OutputKitchen" << num;
-//   pipes = std::make_pair(NamedPipe in(namein), NamedPipe out(nameout));
+//   NamedPipe in(namein.str());
+//   NamedPipe out(nameout.str());
+//   pipes = std::make_pair(&in, &out);
 //   this->pipe.push_back(pipes);
 //   son = this->process->fork();
 //   son->setPipe(pipes);
+//   new Kitchen(&(pipes.first), &(pipes.second));
 //   this->processes.push_back(son);
 //   num += 1;
 // }
 
-// void	Reception::deliverPizza(Pizza *pizza)
-// {
-//   std::cout << "Service d'une "
-// 	    << pizza->getName()
-// 	    << " "
-// 	    << pizza->getSizeText()
-// 	    << std::endl;
-//   pizza->Pizza::~Pizza();
-// }
+void	Reception::deliverPizza(Pizza *pizza)
+{
+  std::cout << "Service d'une "
+	    << pizza->getName()
+	    << " "
+	    << pizza->getSizeText()
+	    << std::endl;
+  pizza->Pizza::~Pizza();
+}
 
 void	Reception::run()
 {

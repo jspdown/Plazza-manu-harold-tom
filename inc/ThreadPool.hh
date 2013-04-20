@@ -1,8 +1,11 @@
 
-#include	__THREADPOOL_HH__
-# define	__THREADPOOL_HH__
+#ifndef	__THREADPOOL_HH__
+#define	__THREADPOOL_HH__
+
+#include	<queue>
 
 #include	"Task.hh"
+#include	"IMutex.hh"
 
 class	ThreadPool
 {

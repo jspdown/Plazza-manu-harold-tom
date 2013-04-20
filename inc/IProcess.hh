@@ -8,7 +8,7 @@
 
 class IProcess
 {
-protected:
+public:
   virtual			~IProcess(){};
   virtual IProcess *		fork() = 0;
   virtual void			quit(int) = 0;

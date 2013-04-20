@@ -40,10 +40,10 @@ void			UnixProcess::quit(int return_value)
   exit(return_value);
 }
 
-void			UnixProcess::setPipe(std::pair<NamedPipe *, NamedPipe *> & pipe)
+void			UnixProcess::setPipe(std::pair<NamedPipe *, NamedPipe *> *pipe)
 {
-  this->pipes.first = pipe.first;
-  this->pipes.second = pipe.second;
+  this->pipes->first = pipe->first;
+  this->pipes->second = pipe->second;
 }
 
 void			UnixProcess::put(const std::string & msg)
@@ -52,7 +52,7 @@ void			UnixProcess::put(const std::string & msg)
 
   trame = CmdLineParse::CmdLineToTrame(msg);
   for (size_t i = 0; i < trame.size(); ++i)
-    this->pipes.first->put(trame[i]);
+    this->pipes->first->put(trame[i]);
       //  std::for_each(trame.begin(), trame.end(), (this->pipes.first())->put);
 }
 
@@ -60,6 +60,6 @@ std::string    	UnixProcess::get()
 {
   std::string	msg;
 
-  msg = this->pipes.second->get();
+  msg = this->pipes->second->get();
   return (msg);
 }

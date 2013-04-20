@@ -10,7 +10,7 @@ class UnixProcess : public IProcess
 {
 private:
   pid_t					pid;
-  std::pair<NamedPipe *, NamedPipe *>	pipes;
+  std::pair<NamedPipe *, NamedPipe *>	*pipes;
 
 public:
 				UnixProcess();
@@ -20,7 +20,7 @@ public:
   virtual void			quit(int return_value);
   virtual void			put(const std::string &);
   virtual std::string		get();
-  virtual void			setPipe(std::pair<NamedPipe *, NamedPipe *> &);
+  virtual void			setPipe(std::pair<NamedPipe *, NamedPipe *> *);
 };
 
 #endif // __UNIX_PROCESS_HPP__

@@ -18,9 +18,9 @@ public:
   virtual		~UnixProcess();
   virtual IProcess *   	fork();
   virtual void	       	quit(int return_value);
-  void			put(const std::string &);
-  const std::string &	get();
-  void			setPipe(std::pair<NamedPipe, NamedPipe> &);
+  virtual void	       	put(const std::string &);
+  virtual const std::string &	get();
+  virtual void			setPipe(std::pair<NamedPipe, NamedPipe> &);
 };
 
 #endif // __UNIX_PROCESS_HPP__

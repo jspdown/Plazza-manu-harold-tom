@@ -32,11 +32,7 @@ IProcess *		UnixProcess::fork()
     return new UnixProcess(pid);
 }
 
-<<<<<<< HEAD
 void		UnixProcess::quit(int return_value)
-=======
-void			UnixProcess::exit(int return_value)
->>>>>>> 5aa2cb34acca0a3f7b19b934070b182488c33476
 {
   exit(return_value)
 }

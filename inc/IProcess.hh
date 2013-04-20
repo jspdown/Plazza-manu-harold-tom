@@ -1,6 +1,11 @@
 #ifndef __I_PROCESS_HH__
 #define __I_PROCESS_HH__
 
+#include	<utility>
+#include	<string>
+#include	"NamedPipe.hh"
+
+
 class IProcess
 {
 protected:

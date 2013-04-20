@@ -2,11 +2,11 @@
 #define __RECEPTION_HH__
 
 #include <deque>
-#include <pair>
+#include <utility>
 
+#include "IProcess.hh"
 #include "InputOutput.hh"
 #include "NamedPipe.hh"
-#include "IRequest.hh"
 #include "Pizza.hh"
 
 class Reception
@@ -24,7 +24,7 @@ public:
   void	deliverPizza(Pizza *);
   void	run();
   void	destroyKitchen(int);
-  void	transferOrder(IRequest *);
+  void	transferOrder();
   int	checkStatus();
 };
 

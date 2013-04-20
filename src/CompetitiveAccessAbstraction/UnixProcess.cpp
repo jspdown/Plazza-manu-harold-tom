@@ -1,3 +1,6 @@
+
+#include <sys/types.h>
+#include <unistd.h>
 #include "UnixProcess.hh"
 
 UnixProcess::UnixProcess()
@@ -28,7 +31,7 @@ IProcess *	UnixProcess::fork()
     return new UnixProcess(pid);
 }
 
-void		UnixProcess::exit(int return_value)
+void		UnixProcess::quit(int return_value)
 {
   exit(return_value)
 }

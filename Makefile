@@ -14,6 +14,7 @@ SRC_CORE	=	$(SRC_PATH)Core/
 SRC_PIZZA	=	$(SRC_PATH)Pizza/
 SRC_REQUEST	=	$(SRC_PATH)Request/
 SRC_UTILS	=	$(SRC_PATH)Utils/
+SRC_CONC	=	$(SRC_PATH)CompetitiveAccessAbstraction/
 
 #SRC	=	$(SRC_PIZZA)Pizza.cpp \
 		$(SRC_PIZZA)PizzaHandler.cpp \
@@ -26,10 +27,18 @@ SRC_UTILS	=	$(SRC_PATH)Utils/
 		$(SRC_REQUEST)RequestHandler.cpp \
 		$(SRC_UTILS)Convert.cpp
 
-SRC	=	$(SRC_CORE)CmdLineParse.cpp \
+# SRC	=	$(SRC_CORE)CmdLineParse.cpp \
+# 		$(SRC_UTILS)Convert.cpp \
+# 		$(SRC_PIZZA)Pizza.cpp \
+# 		$(SRC_UNIT)CmdLineParse.cpp
+
+SRC	= 	$(SRC_CORE)Reception.cpp \
+		$(SRC_CORE)CmdLineParse.cpp \
 		$(SRC_UTILS)Convert.cpp \
 		$(SRC_PIZZA)Pizza.cpp \
-		$(SRC_UNIT)CmdLineParse.cpp
+		$(SRC_CONC)UnixProcess.cpp \
+		$(SRC_CONC)NamedPipe.cpp \
+		$(SRC_UNIT)Reception.cpp
 
 ifeq ($(UNIT), Pizza)
 	SRC += $(SRC_UNIT)pizza.cpp

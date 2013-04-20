@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <utility>
+#include <exception>
 
 #include "Trame.hh"
 #include "CmdLineParse.hh"
@@ -37,6 +38,8 @@ void	Reception::createKitchen()
     {
       son->setPipe(pipes);
       Kitchen * k = new Kitchen(this->nbr_cooks, pipes.first, pipes.second);
+      if (!k)
+	throw std::exception(); //warning
       k->run();
       this->processes.push_back(son);
     }

@@ -12,10 +12,10 @@
 class Reception
 {
 private:
-  IProcess					*process;
-  //  InputOutput					io;
-  std::deque<std::pair<NamedPipe, NamedPipe> >	pipe;
-  std::deque<IProcess *>			processes;
+  IProcess						*process;
+  //  InputOutput						io;
+  std::deque<std::pair<NamedPipe *, NamedPipe *> >	pipe;
+  std::deque<IProcess *>				processes;
 
 public:
 	Reception();

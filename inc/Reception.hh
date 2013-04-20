@@ -24,7 +24,7 @@ public:
   void	deliverPizza(Pizza *) const;
   void	run();
   void	destroyKitchen(int);
-  void	transferOrder() const;
+  void	transferOrder(const std::string &) const;
   int	checkStatus() const;
 };
 

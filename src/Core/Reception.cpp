@@ -3,6 +3,7 @@
 #include <vector>
 #include <utility>
 
+#include "Trame.hh"
 #include "CmdLineParse.hh"
 #include "Reception.hh"
 #include "UnixProcess.hh"
@@ -72,7 +73,7 @@ void	Reception::run()
 //   this->pipe.erase(this->pipe.begin() + pos);
 // }
 
-void	Reception::transferOrder(const std::string & msg, int num) const
+void	Reception::transferOrder(const std::string & msg) const
 {
   int	pos;
 
@@ -86,7 +87,7 @@ int	Reception::checkStatus() const
 {
   std::vector<std::string>	trame;
   std::string			packedtrame;
-  int				i;
+  unsigned int 			i;
   std::string			answer;
 
   packedtrame = Trame::pack("GetStat", trame);
@@ -97,7 +98,7 @@ int	Reception::checkStatus() const
       while (answer.empty())
 	answer = (this->pipe[i].second)->get();
       trame = Trame::unpack(answer);
-      if (trame.size >= 3 && trame[2].compare("0") != 0)
+      if (trame.size() >= 3 && trame[2].compare("0") != 0)
 	return i;
     }
   return (-1);

@@ -12,10 +12,14 @@ private:
   std::fstream	file;
 
 public:
-	       	NamedPipe(std::string);
+  class NamedPipeError :public std::exception
+  {
+    const char * what() const throw();
+  };
+	       	NamedPipe(const std::string &);
       		~NamedPipe();
   std::string	get();
-  void	       	put(std::string);
+  void	       	put(const std::string &);
 };
 
 #endif // __NAMED_PIPE_HPP__

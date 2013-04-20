@@ -1,7 +1,9 @@
 
 #include	"Kitchen.hh"
 
-Kitchen::Kitchen()
+Kitchen::Kitchen(NamedPipe *in, NamedPipe *out) :
+  pipe(std::pair<NamedPipe *, NamedPipe *>(in, out))
+  
 {
   
 }

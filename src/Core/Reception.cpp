@@ -50,17 +50,19 @@ void	Reception::run()
 
   while (true)
     {
-      std::cin >> msg;
+      std::getline (std::cin, msg);
       tramecmd = CmdLineParse::CmdLineToTrame(msg);
       for (size_t i = 0; i < tramecmd.size(); ++i)
-	std::cout << tramecmd[i] << std::endl;
+	{
+	  std::cout << tramecmd[i] << std::endl;
+	}
     }
 }
 
-void	Reception::destroyKitchen(int pos)
-{
-  this->pipe.erase(this->pipe.begin() + pos);
-}
+// void	Reception::destroyKitchen(int pos)
+// {
+//   this->pipe.erase(this->pipe.begin() + pos);
+// }
 
 void	Reception::transferOrder()
 {

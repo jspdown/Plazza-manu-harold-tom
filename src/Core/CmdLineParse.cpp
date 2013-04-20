@@ -13,6 +13,7 @@ void		CmdLineParse::sepTrame(std::vector<std::string> &r, const std::string &lin
   if (pos != std::string::npos)
     {
       mul = line.substr(pos + 1);
+      std::cout << mul << std::endl;
       size_t m = mul.find("x");
       if (m != std::string::npos)
 	{
@@ -22,10 +23,16 @@ void		CmdLineParse::sepTrame(std::vector<std::string> &r, const std::string &lin
 	    r.push_back(line.substr(0, pos));
 	}
       else
-	throw SyntaxError::SyntaxError;
+	{
+	  std::cout << "lalal2" << std::endl;
+	  throw CmdLineParse::SyntaxError();
+	}
     }
   else
-    throw SyntaxError::SyntaxError;
+    {
+      std::cout << "lalal" << std::endl;
+      throw CmdLineParse::SyntaxError();
+    }
 }
 
 std::string	CmdLineParse::toTrame(const std::string &in)
@@ -67,21 +74,13 @@ std::vector<std::string>	CmdLineParse::CmdLineToTrame(const std::string &in)
       sepTrame(res, line);
       tmp = tmp.substr(dot + 1);
     }
-  std::cout << tmp << std::endl;
   line = toTrame(tmp);
+  std::cout << in << std::endl;
   sepTrame(res, line);
   return (res);
 }
 
-SyntaxError::SyntaxError()
-{
-  
-}
-SyntaxError::~SyntaxError()
-{
-
-}
-const char* SyntaxError::what() const throw()
+const char* CmdLineParse::SyntaxError::what() const throw()
 {
   return ("[Error] : \tSyntax Error");
 }

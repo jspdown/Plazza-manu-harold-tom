@@ -9,6 +9,7 @@
 
 class	Kitchen
 {
+  std::pair<NamedPipe *, NamedPipe *>		pipe;
   Manager					chief;
   std::map<std::pair<TypeIngredient, int> >	ingredients;
 public:

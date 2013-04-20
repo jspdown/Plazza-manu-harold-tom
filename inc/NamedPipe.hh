@@ -2,19 +2,20 @@
 #define __NAMED_PIPE_HPP__
 
 #include <string>
-
-#include "Trame.hpp"
+#include <fstream>
+#include <vector>
 
 class NamedPipe
 {
 private:
   std::string	name;
+  std::fstream	file;
 
 public:
-		NamedPipe();
-		~NamedPipe();
-  Trame *	get();
-  void		put(Trame *);
+	       	NamedPipe(std::string);
+      		~NamedPipe();
+  std::string	get();
+  void	       	put(std::string);
 };
 
 #endif // __NAMED_PIPE_HPP__

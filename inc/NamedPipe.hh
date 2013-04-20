@@ -9,6 +9,7 @@ class NamedPipe
 {
 private:
   std::string	name;
+  int		fd;
   std::fstream	file;
 
 public:
@@ -20,6 +21,7 @@ public:
       		~NamedPipe();
   std::string	get();
   void	       	put(const std::string &);
+  int		getFd()	const;
 };
 
 #endif // __NAMED_PIPE_HPP__

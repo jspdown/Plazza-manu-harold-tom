@@ -1,3 +1,4 @@
+#include <sstream>
 #include <iostream>
 #include <sys/types.h>
 #include <unistd.h>
@@ -31,7 +32,11 @@ IProcess *		UnixProcess::fork()
       return 0;
     }
   else if (pid == 0)
-    return (new UnixProcess(pid));
+    {
+      IProcess	*pr = new UnixProcess(pid);
+      std::cout << pr << std::endl;
+      return (pr);
+    }
   return (0);
 }
 
@@ -40,10 +45,16 @@ void			UnixProcess::quit(int return_value)
   exit(return_value);
 }
 
-void			UnixProcess::setPipe(std::pair<NamedPipe *, NamedPipe *> *pipe)
+void			UnixProcess::setPipe(int num)
 {
-  this->pipes->first = pipe->first;
-  this->pipes->second = pipe->second;
+  std::stringstream			namein;
+  std::stringstream			nameout;
+  
+  namein << "InputKitchen" << num;
+  nameout << "OutputKitchen" << num;
+  NamedPipe *in = new NamedPipe(namein.str());
+  NamedPipe *out = new NamedPipe(nameout.str());
+  this->pipes = new std::pair<NamedPipe *, NamedPipe *>(in, out);
 }
 
 void			UnixProcess::put(const std::string & msg)

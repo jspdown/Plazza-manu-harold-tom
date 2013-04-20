@@ -11,7 +11,7 @@ private:
   pthread_t	thread;
 
 public:
-	UnixThread(pthread_attr_t attr, void *(*func)(void *), void *arg);
+	UnixThread(pthread_attr_t *attr, void *(*func)(void *), void *arg);
   	~UnixThread();
   void	exit();
   int	join();

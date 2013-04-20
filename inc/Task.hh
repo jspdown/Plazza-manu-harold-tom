@@ -2,19 +2,30 @@
 #ifndef		__TASK_HH__
 # define	__TASK_HH__
 
-template <class T>
+#include	<string>
+#include	<map>
+
+class	Task;
+
+
 class	Task
 {
-  typedef       void    (T::*Action)(const std::string&);
-  Action	func;
-  std::string	arg;
+  std::string	preparePizza(const std::string &arg);
 public:
-  Task();
+  typedef       std::string    (Task::*Action)(const std::string&);
+  Task(const std::string &cmd, const std::string &arg);
   ~Task();
-  Task(const Task<T> &other);
-  Task<T>	&operator=(const Task<T> &other);
+  Task(const Task &other);
+  Task	&operator=(const Task &other);
 
-  void		run();
+  std::string  	run();
+  std::string	getArg()	const;
+
+private:
+  std::map<std::string, Action>	functions;
+  Action			foo;
+  std::string			arg;
+
 };
 
 #endif

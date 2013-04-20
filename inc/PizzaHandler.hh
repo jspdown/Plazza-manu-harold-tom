@@ -16,6 +16,7 @@ public:
   PizzaHandler &operator=(const PizzaHandler &);
 
   Pizza	*build(const std::string &name, TaillePizza size);
+  Pizza	*build(const std::string &trame);
   void	learn(Pizza *p);
   void	unlearn(const std::string &name);
 };

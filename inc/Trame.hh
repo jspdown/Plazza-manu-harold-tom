@@ -11,11 +11,12 @@ public:
   static std::string			pack(const std::string &cmd, std::vector<std::string> elms);
   static std::vector<std::string>	unpack(const std::string &tr);
 
+  static std::string			group(std::vector<std::string> entry, const std::string &delim);
   static std::vector<std::string>	cut(const std::string &sub, const std::string &delim);
-  static std::string			Trame::getCmd(const std::string &tr);
-  static std::string			Trame::getCmd(std::vector<std::string> l);
-  static int				Trame::getSize(const std::string &tr);
-  static int				Trame::getSize(std::vector<std::string> l);
+  static std::string			getCmd(const std::string &tr);
+  static std::string			getCmd(std::vector<std::string> l);
+  static int				getSize(const std::string &tr);
+  static int				getSize(std::vector<std::string> l);
 };
 
 #endif

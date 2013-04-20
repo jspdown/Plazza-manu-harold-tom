@@ -3,7 +3,7 @@
 
 class IMutex
 {
-protected:
+public:
   virtual	~IMutex(){};
   virtual int	lock() = 0;
   virtual int	trylock() = 0;

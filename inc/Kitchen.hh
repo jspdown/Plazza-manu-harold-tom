@@ -5,23 +5,30 @@
 #include	<map>
 #include	<utility>
 #include	"Pizza.hh"
-#include	"Manager.hh"
+#include	"NamedPipe.hh"
+
+class	Manager;
 
 class	Kitchen
 {
+  int						nbr_cooks;
   std::pair<NamedPipe *, NamedPipe *>		pipe;
-  Manager					chief;
-  std::map<std::pair<TypeIngredient, int> >	ingredients;
+  Manager					*chief;
+  std::map<TypeIngredient, int>	ingredients;
 public:
-  Kitchen();
+  Kitchen(int nbr_cooks, NamedPipe *in, NamedPipe *out);
   ~Kitchen();
   Kitchen(const Kitchen &other);
   Kitchen	&operator=(const Kitchen &other);
   
   void	close();
-  void	checkOrder();
-  void	sendOrder(const std::string &);
-  std::map<std::pair<TypeIngredient, int> >	getIngredients()	const;
+  std::string	getOrder();
+  void		sendOrder(const std::string &);
+  std::map<TypeIngredient, int>	getIngredients()	const;
+  void		incressIngredients();
+  bool		canCookPizza(Pizza *p);
+  std::string	buildStat();
+  void		run();
 };
 
 #endif

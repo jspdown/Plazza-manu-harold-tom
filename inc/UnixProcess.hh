@@ -19,7 +19,7 @@ public:
   virtual IProcess *		fork();
   virtual void			quit(int return_value);
   virtual void			put(const std::string &);
-  virtual const std::string &	get();
+  virtual std::string		get();
   virtual void			setPipe(std::pair<NamedPipe *, NamedPipe *> &);
 };
 

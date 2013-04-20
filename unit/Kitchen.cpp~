@@ -1,0 +1,10 @@
+
+#include	<iostream>
+#include	"Kitchen.hh"
+
+int	main()
+{
+  Kitchen	k;
+
+  k.run();'
+}

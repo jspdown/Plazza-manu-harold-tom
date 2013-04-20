@@ -7,7 +7,7 @@
 
 enum	TypePizza
   {
-    Americaine = 1,
+    Americana = 1,
     Fantasia = 2,
     Margarita = 4,
     Regina = 8
@@ -31,7 +31,8 @@ enum	TypeIngredient
     Ham = 16,
     Mushroom = 32,
     Steak = 64,
-    Tomato = 128
+    Tomato = 128,
+    ChiefLove = 254
   };
 
 class	Pizza

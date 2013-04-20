@@ -1,3 +1,5 @@
+
+#include <pthread.h>
 #include "UnixMutex.hh"
 
 UnixMutex::UnixMutex()

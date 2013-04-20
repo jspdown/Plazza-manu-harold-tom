@@ -3,7 +3,7 @@
 
 class IThread
 {
-protected:
+public:
   virtual	~IThread(){};
   virtual void	exit() = 0;
   virtual int	join() = 0;

@@ -1,8 +1,10 @@
+
+#include <pthread.h>
 #include "UnixThread.hh"
 
-UnixThread::UnixThread(pthread_attr_t attr, void *(*func)(void *), void *arg)
+UnixThread::UnixThread(pthread_attr_t *attr, void *(*func)(void *), void *arg)
 {
-  pthread_create(this->thread, attr, func, arg);
+pthread_create(&(this->thread), attr, func, arg);
 }
 
 UnixThread::~UnixThread()

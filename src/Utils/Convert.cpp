@@ -15,7 +15,6 @@ int	Convert::stringToInt(const std::string &nbr)
 
 std::string	Convert::TaillePizzaToString(TaillePizza size)
 {
-  std::string				res;
   std::map<TaillePizza, std::string>	in;
   std::map<TaillePizza, std::string>::iterator	it;
 
@@ -29,12 +28,29 @@ std::string	Convert::TaillePizzaToString(TaillePizza size)
   return ((it == in.end()) ? (std::string("Unknow")) : (it->second));
 }
 
+TaillePizza	Convert::stringToTaillePizza(const std::string &size)
+{
+  std::map<std::string, TaillePizza>	in;
+  std::map<std::string, TaillePizza>::iterator	it;
+
+  in[std::string("S")] = S;
+  in[std::string("M")] = M;
+  in[std::string("L")] = L;
+  in[std::string("XL")] = XL;
+  in[std::string("XXL")] = XXL;
+
+  it = in.find(size);
+  if (it == in.end())
+    throw Convert::ConvertError();
+  return (it->second);
+}
+
 std::string	Convert::TypePizzaToString(TypePizza size)
 {
   std::string				res;
   std::map<TypePizza, std::string>	in;
 
-  in[Americaine] = std::string("Americaine");
+  in[Americana] = std::string("Americana");
   in[Fantasia] = std::string("Fantasia");
   in[Margarita] = std::string("Margarita");
   in[Regina] = std::string("Regina");
@@ -57,6 +73,7 @@ std::string	Convert::TypeIngredientToString(TypeIngredient size)
   in[Mushroom] = std::string("Mushroom");
   in[Steak] = std::string("Steak");
   in[Tomato] = std::string("Tomato");
+  in[ChiefLove] = std::string("ChiefLove");
 
   it = in.find(size); 
   return ((it == in.end()) ? (std::string("Unknow")) : (it->second));
@@ -71,4 +88,9 @@ std::string	Convert::intToString(int nbr)
   ss << nbr;
   ss >> res;
   return (res);
+}
+
+const char * Convert::ConvertError::what() const throw()
+{
+  return ("[Error] : bad conversion");
 }

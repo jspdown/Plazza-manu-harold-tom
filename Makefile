@@ -11,6 +11,7 @@ SRC_PATH	=	./src/
 SRC_UNIT	=	./unit/
 
 SRC_CORE	=	$(SRC_PATH)Core/
+SRC_POOL	=	$(SRC_PATH)ThreadPool/
 SRC_PIZZA	=	$(SRC_PATH)Pizza/
 SRC_REQUEST	=	$(SRC_PATH)Request/
 SRC_UTILS	=	$(SRC_PATH)Utils/
@@ -36,9 +37,18 @@ SRC	= 	$(SRC_CORE)Reception.cpp \
 		$(SRC_CORE)CmdLineParse.cpp \
 		$(SRC_UTILS)Convert.cpp \
 		$(SRC_PIZZA)Pizza.cpp \
+		$(SRC_PIZZA)PizzaHandler.cpp \
 		$(SRC_CONC)UnixProcess.cpp \
+		$(SRC_CONC)UnixThread.cpp \
 		$(SRC_CONC)NamedPipe.cpp \
-		$(SRC_UNIT)Reception.cpp
+		$(SRC_CONC)UnixMutex.cpp \
+		$(SRC_CONC)UnixCondVar.cpp \
+		$(SRC_POOL)ThreadPool.cpp \
+		$(SRC_POOL)Task.cpp \
+		$(SRC_CORE)Manager.cpp \
+		$(SRC_CORE)Kitchen.cpp \
+		$(SRC_REQUEST)Trame.cpp\
+		$(SRC_UNIT)Kitchen.cpp
 
 ifeq ($(UNIT), Pizza)
 	SRC += $(SRC_UNIT)pizza.cpp
@@ -56,7 +66,7 @@ INC	=	-I $(INC_PATH)
 
 CC	=	g++
 
-CPPFLAGS	+=	-Wall -W $(INC)
+CPPFLAGS	+=	-Wall -W -lpthread $(INC)
 
 
 # Rules

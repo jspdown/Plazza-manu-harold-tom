@@ -56,7 +56,7 @@ void			UnixProcess::put(const std::string & msg)
       //  std::for_each(trame.begin(), trame.end(), (this->pipes.first())->put);
 }
 
-const std::string &    	UnixProcess::get()
+std::string    	UnixProcess::get()
 {
   std::string	msg;
 

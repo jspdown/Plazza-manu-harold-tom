@@ -3,7 +3,7 @@
 
 class ICondVar
 {
-protected:
+public:
   virtual	~ICondVar(){};
   virtual int	signal() = 0;
   virtual int	broadcast() = 0;

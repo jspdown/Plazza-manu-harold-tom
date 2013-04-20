@@ -26,12 +26,16 @@ std::string	NamedPipe::get()
   std::string	msg;
 
   std::getline(this->file, msg);
+  if (!this->file.good())
+    throw NamedPipe::NamedPipeError();
   return msg;
 }
 
 void	NamedPipe::put(const std::string &msg)
 {
   this->file << msg;
+  if (!this->file.good())
+    throw NamedPipe::NamedPipeError();
 }
 
 const char * NamedPipe::NamedPipeError::what() const throw()

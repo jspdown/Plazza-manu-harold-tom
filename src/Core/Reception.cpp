@@ -72,13 +72,33 @@ void	Reception::run()
 //   this->pipe.erase(this->pipe.begin() + pos);
 // }
 
-void	Reception::transferOrder() const
+void	Reception::transferOrder(const std::string & msg, int num) const
 {
+  int	pos;
 
+  msg = Trame::pack(msg);
+  while ((pos = this->checkStatus()) < 0)
+    this->createKitchen();
+  (this->pipe[pos].first)->put(msg);
 }
 
 int	Reception::checkStatus() const
 {
   std::vector<std::string>	trame;
-  return (1);
+  std::string			packedtrame;
+  int				i;
+  std::string			answer;
+
+  packedtrame = Trame::pack("GetStat", trame);
+  for (i = 0; i < this->pipe.size(); i += 1)
+    {
+      (this->pipe[i].first)->put(packedtrame);
+      answer = (this->pipe[i].second)->get();
+      while (answer.empty())
+	answer = (this->pipe[i].second)->get();
+      trame = Trame::unpack(answer);
+      if (trame.size >= 3 && trame[2].compare("0") != 0)
+	return i;
+    }
+  return (-1);
 }

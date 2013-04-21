@@ -21,7 +21,6 @@ RequestHandler::RequestHandler()
   pi[Gruyere] = 1;
   pi[Ham] = 9;
 
-  
   this->requests["SendPizza"] = new SendPizza(Margarita, XL);
   this->requests["SendStat"] = new SendStat(2, 1, 3, pp, pi);
   this->requests["GetPizza"] = new GetPizza(Margarita, XL);

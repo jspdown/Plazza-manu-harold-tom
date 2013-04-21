@@ -10,7 +10,8 @@
 class NamedPipe
 {
 private:
-  int		fd;
+  int			fd;
+  const std::string	name;
 
 public:
   class NamedPipeError :public std::exception

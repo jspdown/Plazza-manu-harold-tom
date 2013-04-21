@@ -12,8 +12,8 @@
 #include "NamedPipe.hh"
 
 NamedPipe::NamedPipe(const std::string &name)
+  : name(name)
 {
-  std::cout << name << std::endl;
   if (mkfifo(name.c_str(), S_IRWXU) < 0)
     {
       std::cout << "error fifo" << std::endl;
@@ -28,12 +28,14 @@ NamedPipe::NamedPipe(const std::string &name)
     }
 }
 NamedPipe::NamedPipe(int fd) :
-  fd(fd)
+  fd(fd),
+  name("")
 {
 }
 
 NamedPipe::~NamedPipe()
 {
+  remove(this->name.c_str());
 }
 
 

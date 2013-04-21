@@ -11,8 +11,9 @@ UnixProcess::UnixProcess()
   this->pid = getpid();
 }
 
-UnixProcess::UnixProcess(pid_t pid)
-  : pid(pid)
+UnixProcess::UnixProcess(pid_t pid, size_t id)
+  : pid(pid),
+    id(id)
 {
 }
 
@@ -31,7 +32,7 @@ IProcess *		UnixProcess::fork()
       return 0;
     }
   else if (pid == 0)
-    return (new UnixProcess(pid));
+    return (new UnixProcess(pid, 0));
   return (0);
 }
 

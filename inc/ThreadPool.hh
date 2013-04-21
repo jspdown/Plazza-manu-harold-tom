@@ -8,6 +8,7 @@
 #include	"Task.hh"
 #include	"IMutex.hh"
 #include	"IThread.hh"
+#include	"ICondvar.hh"
 
 class	ThreadPool
 {
@@ -17,14 +18,27 @@ protected:
   IMutex			*mutex;
   std::deque<Task *>		actions;
   std::deque<std::string>      	ressources;
+  std::vector<IMutex *>		mutexes;
   std::vector<IThread *>       	thread;
+  std::vector<ICondVar *>	condvars;
+
 public:
   ThreadPool(size_t nbr_thread);
   ~ThreadPool();
   void	add_action(Task *t);
-  bool	run_action();
+  bool	run_action(size_t &);
   int	getNbrThread()	const;
   int	getNbrThreadBuzy()	const;
+};
+
+class	Arg
+{
+public:
+  ThreadPool	*pool;
+  size_t	id;
+
+  Arg(ThreadPool *, size_t);
+  ~Arg();
 };
 
 void	*execute(void *data);

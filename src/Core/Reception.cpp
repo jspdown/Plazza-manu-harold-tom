@@ -2,7 +2,6 @@
 #include <iostream>
 #include <vector>
 #include <utility>
-#include <exception>
 
 #include "Trame.hh"
 #include "CmdLineParse.hh"

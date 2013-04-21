@@ -7,15 +7,16 @@
 
 class UnixMutex : public IMutex
 {
-private:
   pthread_mutex_t	mutex;
+  size_t       		id;
 
 public:
-	UnixMutex();
+	UnixMutex(size_t);
 	~UnixMutex();
   int	lock();
   int	trylock();
   int	unlock();
+  pthread_mutex_t * getMutex();
 };
 
 #endif // __UNIX_MUTEX_HH__

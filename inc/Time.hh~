@@ -1,0 +1,17 @@
+#ifndef __TIME_HH__
+#define __TIME_HH__
+
+#include	<sys/time.h>
+
+class Timer
+{
+public:
+  struct timeval	ctime;
+  struct timespec	timer;
+
+  Timer(int);
+  ~Timer();
+  const struct timespec *	getTime() const;
+};
+
+#endif // __TIME_HH__

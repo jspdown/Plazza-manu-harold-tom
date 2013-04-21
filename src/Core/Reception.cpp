@@ -4,6 +4,7 @@
 #include	<vector>
 #include	<string>
 
+#include	"Convert.hh"
 #include	"CmdLineParse.hh"
 #include	"Trame.hh"
 #include	"UnixThread.hh"
@@ -79,6 +80,21 @@ void	Reception::applyOutput()
   	}
       else if (Trame::getCmd(msg) != "SendStat")
   	this->ressources.pop_front();
+      else if (Trame::getCmd(msg) != "Destroy")
+	{
+	  std::vector<std::string>	cmd = Trame::unpack(msg);
+	  if (cmd.size() > 2)
+	    {
+	      int	fd_in = Convert::stringToInt(cmd[1]);
+	      int	fd_out = Convert::stringToInt(cmd[2]);
+
+	      for (std::deque<std::pair<NamedPipe *, NamedPipe *> *>::iterator i = this->pipe.begin(); i != this->pipe.end(); ++i)
+		{
+		  if ((*i)->first->getFd() == fd_in && (*i)->second->getFd() == fd_out)
+		    this->pipe.erase(i);
+		}
+	    }
+	}
     }
 }
 
@@ -101,7 +117,6 @@ void	Reception::createKitchen()
     {
       Kitchen k = Kitchen(this->nbr_cooks, fds.first, fds.second, num);
       k.run();
-      //pesnser a close les fds
       son->quit(1);
     }
     ++num;

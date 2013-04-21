@@ -100,7 +100,7 @@ void	Kitchen::close()
 {
   std::stringstream	cmd;
 
-  cmd << "Destroy:" << this->pipe.first.getFd() << ":" << this->pipe.second.getFd() << std::endl;
+  cmd << "Destroy[?]:" << this->pipe.first.getFd() << ":" << this->pipe.second.getFd() << std::endl;
   this->sendOrder(cmd.str());
   this->Kitchen::~Kitchen();
 }

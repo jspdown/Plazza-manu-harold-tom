@@ -68,7 +68,6 @@ Kitchen::~Kitchen()
 
 }
 
-
 void	Kitchen::throwCounter()
 {
   this->thread_counter = new UnixThread(0, counter, reinterpret_cast<void *>(this), 0);
@@ -92,6 +91,8 @@ void	Kitchen::run()
 	    sendOrder(buildStat());
 	  else if (cmd == "GetPizza")
 	    this->chief->preparePizza(trame);
+	  else if (cmd == "Destroy")
+	    done = true;
 	}
     }
 }
@@ -103,6 +104,7 @@ void	Kitchen::close()
   std::cout << "Closing" << std::endl;
   cmd << "Destroy[?]:" << this->pipe.first.getFd() << ":" << this->pipe.second.getFd() << std::endl;
   this->sendOrder(cmd.str());
+  this->pipe.first << cmd.str();
   this->Kitchen::~Kitchen();
 }
 

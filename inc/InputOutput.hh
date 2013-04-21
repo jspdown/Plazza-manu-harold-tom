@@ -13,7 +13,7 @@ private:
 public:
 			InputOutput();
 			~InputOutput();
-  const std::string &	read();
+  std::string		read();
   void			write(const std::string &);
 };
 

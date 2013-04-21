@@ -5,7 +5,7 @@
 #include	<utility>
 
 #include	"IProcess.hh"
-//#include	"InputOutput.hh"
+#include	"InputOutput.hh"
 #include	"NamedPipe.hh"
 #include	"Pizza.hh"
 
@@ -14,7 +14,7 @@ class Reception
 private:
   IProcess						*process;
   int							nbr_cooks;
-  //  InputOutput						io;
+  InputOutput						io;
   std::deque<std::pair<NamedPipe *, NamedPipe *> *>	pipe;
   std::deque<IProcess *>				processes;
 
@@ -22,7 +22,7 @@ public:
 	Reception(int nbr_cooks);
 	~Reception();
   void	createKitchen();
-  void	deliverPizza(Pizza *) const;
+  void	deliverPizza(Pizza *);
   void	run();
   void	destroyKitchen(int);
   void	getOrder();

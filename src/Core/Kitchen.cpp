@@ -6,7 +6,7 @@
 #include	"Kitchen.hh"
 
 int		Kitchen::c_id = 0;
-UnixMutex	*Kitchen::c_mutex = new UnixMutex();
+UnixMutex	*Kitchen::c_mutex = new UnixMutex(0);
 
 
 Kitchen::Kitchen(int nbr_cooks, NamedPipe *in, NamedPipe *out) :
@@ -137,7 +137,7 @@ std::string	Kitchen::buildStat()
   return (Trame::pack("SendStat", elms));
 }
 
-void		Kitchen::log(const std::string &msg)
+void		Kitchen::log(const std::string &)
 {
   this->c_mutex->lock();
   //  this->log_file << "[Kitchen n" << this->kitchen_id << "]:\t[" << msg << "]" << std::endl;

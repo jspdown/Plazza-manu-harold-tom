@@ -2,7 +2,8 @@
 #include <pthread.h>
 #include "UnixCondVar.hh"
 
-UnixCondVar::UnixCondVar()
+UnixCondVar::UnixCondVar(size_t id)
+  : id(id)
 {
 }
 
@@ -20,12 +21,17 @@ int	UnixCondVar::broadcast()
   return pthread_cond_broadcast(&(this->condvar));
 }
 
-int	UnixCondVar::wait()
+int	UnixCondVar::wait(IMutex *mutex)
 {
-  return pthread_cond_signal(&(this->condvar));
+  return pthread_cond_wait(&(this->condvar), mutex->getMutex());
 }
 
-int	UnixCondVar::timedwait()
+int	UnixCondVar::timedwait(IMutex *mutex, Timer *time)
 {
-  return pthread_cond_signal(&(this->condvar));
+  return pthread_cond_timedwait(&(this->condvar), mutex->getMutex(), time->getTime());
+}
+
+pthread_cond_t *	UnixCondVar::getCondVar()
+{
+  return &this->condvar;
 }

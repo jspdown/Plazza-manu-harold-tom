@@ -7,16 +7,17 @@
 
 class UnixCondVar: public ICondVar
 {
-private:
   pthread_cond_t	condvar;
+  size_t       		id;
 
 public:
-  	~UnixCondVar();
-	UnixCondVar();
-  int	signal();
-  int	broadcast();
-  int	wait();
-  int	timedwait();
+		~UnixCondVar();
+		UnixCondVar(size_t);
+  int		signal();
+  int		broadcast();
+  int		wait(IMutex *);
+  int		timedwait(IMutex *, Timer *);
+  pthread_cond_t *	getCondVar();
 };
 
 #endif // __UNIX_CONDVAR_HPP__

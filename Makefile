@@ -35,11 +35,13 @@ SRC_CONC	=	$(SRC_PATH)CompetitiveAccessAbstraction/
 
 SRC	= 	$(SRC_CORE)Reception.cpp \
 		$(SRC_CORE)CmdLineParse.cpp \
+		$(SRC_CORE)InputOutput.cpp \
 		$(SRC_UTILS)Convert.cpp \
 		$(SRC_PIZZA)Pizza.cpp \
 		$(SRC_PIZZA)PizzaHandler.cpp \
 		$(SRC_CONC)UnixProcess.cpp \
 		$(SRC_CONC)UnixThread.cpp \
+		$(SRC_CONC)Time.cpp \
 		$(SRC_CONC)NamedPipe.cpp \
 		$(SRC_CONC)UnixMutex.cpp \
 		$(SRC_CONC)UnixCondVar.cpp \

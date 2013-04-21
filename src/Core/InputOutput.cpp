@@ -12,7 +12,7 @@ InputOutput::~InputOutput()
 {
 }
 
-const std::string &	InputOutput::read()
+std::string	InputOutput::read()
 {
   std::string	msg;
 

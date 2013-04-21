@@ -10,11 +10,12 @@ class UnixProcess : public IProcess
 {
 private:
   pid_t					pid;
+  int					id;
   std::pair<NamedPipe *, NamedPipe *>	*pipes;
 
 public:
 				UnixProcess();
-				UnixProcess(pid_t pid);
+				UnixProcess(pid_t pid, size_t id);
   virtual			~UnixProcess();
   virtual IProcess *		fork();
   virtual void			quit(int return_value);

@@ -2,7 +2,8 @@
 #include <pthread.h>
 #include "UnixMutex.hh"
 
-UnixMutex::UnixMutex()
+UnixMutex::UnixMutex(size_t id)
+  : id(id)
 {
   pthread_mutex_init(&(this->mutex), NULL);
 }
@@ -25,4 +26,9 @@ int	UnixMutex::trylock()
 int	UnixMutex::unlock()
 {
   return pthread_mutex_unlock(&(this->mutex));
+}
+
+pthread_mutex_t *	UnixMutex::getMutex()
+{
+  return &this->mutex;
 }

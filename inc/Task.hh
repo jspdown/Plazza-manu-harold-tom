@@ -3,6 +3,7 @@
 # define	__TASK_HH__
 
 #include	<string>
+#include	"UnixMutex.hh"
 #include	<map>
 
 class	Task;
@@ -10,6 +11,7 @@ class	Task;
 
 class	Task
 {
+  static UnixMutex				mutex;
   std::string	preparePizza(const std::string &arg);
 public:
   typedef       std::string    (Task::*Action)(const std::string&);

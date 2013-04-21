@@ -23,7 +23,6 @@ private:
   int						nbr_cooks;
   Manager					*chief;
   UnixThread					thread_sender;
-  UnixMutex					send_controller;
   std::map<TypeIngredient, int>	ingredients;
 public:
   Kitchen(int nbr_cooks, int fd_in, int fd_out, int num);

@@ -8,6 +8,7 @@
 #include	"Trame.hh"
 #include	"UnixThread.hh"
 #include	"UnixProcess.hh"
+#include	"UnixMutex.hh"
 #include	"Reception.hh"
 
 void	*delivery(void *data)
@@ -30,7 +31,7 @@ void	*reader_action(void *data)
 
   while (!done)
     {
-      rp->applyOutput();
+      rp->applyOutput(); 
     }
   return (0);
 }
@@ -60,7 +61,6 @@ void	Reception::fillRessources()
      
       if (trame != "")
 	{
-	  std::cout << "{put}\t" << trame  << std::endl;
 	  this->ressources.push_back(trame);
 	}
     }
@@ -68,18 +68,17 @@ void	Reception::fillRessources()
 
 void	Reception::applyOutput()
 {
+  std::string	res;
+
   if (!this->ressources.empty())
     {
       std::string msg = this->ressources.front();
       if (Trame::getCmd(msg) == "GetPizza")
   	{
-  	  std::cout << "{OUTPUT}\t" << msg << std::endl;
   	  this->ressources.pop_front();
   	}
       else if (Trame::getCmd(msg) != "SendStat")
   	this->ressources.pop_front();
-      else
-	std::cout << "{GNNNNA}\til reste un sendSTAT " << msg << std::endl;
     }
 }
 
@@ -126,7 +125,6 @@ std::string	Reception::searchTrame(const std::string &seek)
   
   while (it != this->ressources.end())
     {
-      std::cout << "im g=here" << std::endl;
       if (Trame::getCmd(*it) == seek)
 	{
 	  answer = *it;
@@ -150,17 +148,12 @@ int	Reception::findKitchen()
 
   for (size_t i = 0; i < this->pipe.size(); ++i)
     {
-      std::cout << "\t\tfind in pipe = " << i << std::endl;
       packedtrame = Trame::pack("GetStat", trame);
       this->pipe[i]->first->put(packedtrame);
-      std::cout << "\t\twait in pipe = " << i << std::endl;
       while ((msg = this->searchTrame("SendStat")) == "");
-      std::cout << "\t\trecv in pipe = " << i << " " << msg << std::endl;
       std::vector<std::string> res_msg = Trame::unpack(msg);
       if (res_msg.size() == 5 && res_msg[3] != "0")
 	return (i);
-      else
-	std::cout << "threre are : " << res_msg.size() << " " << res_msg[3] << "pizza possible" << std::endl;
     }
   return (-1);
 }
@@ -171,9 +164,7 @@ void	Reception::dispatch(std::vector<std::string> lines)
 
   for (size_t i = 0; i < lines.size(); ++i)
     {
-      //std::cout << i << ".find kitchen for = " << lines[i] << std::endl;
       idx = this->findKitchen();
-      //std::cout << "kitchen find in " << idx << std::endl;
       if (idx == -1)
 	{
 	  this->createKitchen();
@@ -182,7 +173,6 @@ void	Reception::dispatch(std::vector<std::string> lines)
       else
 	this->pipe[idx]->first->put(lines[i]);
     }
-  std::cout << "#####################################################################################################" << std::endl;
 }
 
 void	Reception::run()

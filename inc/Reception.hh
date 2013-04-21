@@ -34,6 +34,9 @@ public:
   void		dispatch(std::vector<std::string> lines);
   void		throwReader();
   void		run();
+
+  void		lockWriter();
+  void		unlockWriter();
 };
 
 void	*delivery(void *data);

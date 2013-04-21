@@ -25,7 +25,6 @@ void	Manager::deliverPizza(NamedPipe *out)
 {
   for (size_t i = 0; i < this->ressources.size(); ++i)
     {
-      std::cout << "delever " << this->ressources[i] << std::endl;
       out->put(this->ressources[i]);
     }
   this->freeRessources();

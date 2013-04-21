@@ -67,7 +67,6 @@ bool	ThreadPool::run_action(size_t & id)
 	{
 	  retcode = this->condvars[id]->timedwait(this->mutexes[id], &time);
 	}
-      std::cout << "finished @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" << std::endl;
       this->ressources.push_back(t->run());
       this->mutexes[id]->unlock();
       --(this->nbr_current_action);

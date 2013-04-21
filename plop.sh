@@ -1,4 +1,4 @@
 #! /bin/bash
 
-rm InputKitchen0
-rm OutputKitchen0
+rm InputKitchen*
+rm OutputKitchen*

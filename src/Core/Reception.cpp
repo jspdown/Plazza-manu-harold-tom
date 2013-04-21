@@ -27,7 +27,8 @@ void	Reception::createKitchen()
   std::stringstream			nameout;
   std::pair<NamedPipe *, NamedPipe *>	*pipes;
   IProcess *				son;
-
+  
+  std::cout << "create kitchen" << std::endl;
   namein << "InputKitchen" << num;
   nameout << "OutputKitchen" << num;
   NamedPipe *in = new NamedPipe(namein.str());
@@ -36,8 +37,7 @@ void	Reception::createKitchen()
   this->pipe.push_back(pipes);
   if ((son = this->process->fork()))
     {
-      std::cout << son << std::endl;
-      son->setPipe(num);
+      son->setPipe(in->getFd(), out->getFd());
       Kitchen * k = new Kitchen(this->nbr_cooks, pipes->first, pipes->second);
       k->run();
       this->processes.push_back(son);
@@ -84,10 +84,11 @@ void	Reception::getOrder()
     {
       if ((pos = this->checkStatus()) < 0)
 	{
+	  std::cout << "not enough place, i must create a kitchen" << std::endl;
 	  this->createKitchen();
 	  pos = this->checkStatus();
 	}
-      std::cout << tramecmd[i] << std::endl;
+      std::cout << "get order trame is : " << tramecmd[i] << std::endl;
       this->pipe[pos]->first->put(tramecmd[i]);
     }
 }
@@ -104,10 +105,11 @@ int	Reception::checkStatus() const
     {
       (this->pipe[i]->first)->put(packedtrame);
       answer = (this->pipe[i]->second)->get();
+      std::cout << "answer is : " << answer << std::endl;
       while (answer.empty())
 	answer = (this->pipe[i]->second)->get();
       trame = Trame::unpack(answer);
-      if (trame.size() >= 3 && trame[2].compare("0") != 0)
+      if (trame.size() >= 3 && trame[3].compare("0") != 0)
 	return i;
     }
   return (-1);

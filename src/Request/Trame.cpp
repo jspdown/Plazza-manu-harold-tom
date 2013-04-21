@@ -1,4 +1,4 @@
-
+#include	<iostream>
 #include	"Convert.hh"
 #include	"Trame.hh"
 
@@ -11,7 +11,7 @@ std::vector<std::string>	Trame::cut(const std::string &sub, const std::string &d
   while ((pos = op.find(delim)) != std::string::npos)
     {
       res.push_back(op.substr(0, pos));
-      op = op.substr(pos);
+      op = op.substr(pos + 1);
     }
   return (res);
 }

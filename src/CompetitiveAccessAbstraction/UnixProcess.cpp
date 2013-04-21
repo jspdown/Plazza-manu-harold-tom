@@ -45,15 +45,10 @@ void			UnixProcess::quit(int return_value)
   exit(return_value);
 }
 
-void			UnixProcess::setPipe(int num)
+void			UnixProcess::setPipe(int fd_in, int fd_out)
 {
-  std::stringstream			namein;
-  std::stringstream			nameout;
-  
-  namein << "InputKitchen" << num;
-  nameout << "OutputKitchen" << num;
-  NamedPipe *in = new NamedPipe(namein.str());
-  NamedPipe *out = new NamedPipe(nameout.str());
+  NamedPipe *in = new NamedPipe(fd_in);
+  NamedPipe *out = new NamedPipe(fd_out);
   this->pipes = new std::pair<NamedPipe *, NamedPipe *>(in, out);
 }
 

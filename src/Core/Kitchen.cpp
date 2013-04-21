@@ -5,8 +5,12 @@
 #include	"Manager.hh"
 #include	"Kitchen.hh"
 
+int		Kitchen::c_id = 0;
+UnixMutex	*Kitchen::c_mutex = new UnixMutex();
+
+
 Kitchen::Kitchen(int nbr_cooks, NamedPipe *in, NamedPipe *out) :
-  nbr_cooks(nbr_cooks), pipe(std::pair<NamedPipe *, NamedPipe *>(in, out)), chief(new Manager(nbr_cooks, this))
+  nbr_cooks(nbr_cooks), pipe(std::pair<NamedPipe *, NamedPipe *>(in, out)), chief(new Manager(nbr_cooks, this)), log_file("kitchen_report", std::ifstream::out | std::ifstream::trunc)
 {
   this->ingredients[Doe] = 5;
   this->ingredients[Eggplant] = 5;
@@ -17,6 +21,10 @@ Kitchen::Kitchen(int nbr_cooks, NamedPipe *in, NamedPipe *out) :
   this->ingredients[Steak] = 5;
   this->ingredients[Tomato] = 5;
   this->ingredients[ChiefLove] = 5;
+  this->kitchen_id = this->c_id;
+  if (!this->log_file.good())
+    throw Kitchen::KitchenError();
+  c_id++;
 }
 
 Kitchen::~Kitchen()
@@ -28,19 +36,33 @@ void	Kitchen::run()
 {
   bool	done = false;
   std::string	trame;
+  std::string	cmd;
 
   while (!done)
     {
       trame = getOrder();
+      std::cout << "trame is: " << trame << std::endl;
       std::vector<std::string>	untrame = Trame::unpack(trame);
+      std::cout << "unpack ok: " << trame << std::endl;
       if (untrame.size() > 0)
 	{
-	  if (untrame[0] == "GetStat")
-	    sendOrder(buildStat());
-	  else if (Trame::unpack(trame)[0] == "GetPizza")
-	    this->chief->preparePizza(trame);
+	  cmd = Trame::getCmd(trame);
+	  std::cout << cmd<< std::endl;
+	  if (cmd == "GetStat")
+	    {
+	      this->log("v'la le rapport chef!");
+	      std::cout << "getStat" << std::endl;
+	      sendOrder(buildStat());
+
+	    }
+	  else if (cmd == "GetPizza")
+	    {
+	      std::cout << "getPIZZA" << std::endl;
+	      this->log("et une pizza au cheval! une !");
+	      this->chief->preparePizza(trame);
+	    }
 	  else
-	    std::cout << "unknow cmd" << std::endl;
+	    this->log("je fais quoi la?");
 	  this->chief->deliverPizza();
 	}
     }
@@ -53,13 +75,16 @@ void	Kitchen::close()
 
 std::string	Kitchen::getOrder()
 {
-  return (this->pipe.first->get());
+  std::string	res;
+
+  *(this->pipe.first) >> res;
+  return (res);
 }
 
 void	Kitchen::sendOrder(const std::string &str)
 {
-  this->pipe.second->put(str);
   std::cout << "send order [" << str << "]" << std::endl;
+  *(this->pipe.second) << str;
 }
 
 std::map<TypeIngredient, int>	Kitchen::getIngredients()	const
@@ -104,10 +129,22 @@ std::string	Kitchen::buildStat()
   for (std::map<TypeIngredient, int>::const_iterator it = this->ingredients.begin(); it != this->ingredients.end(); ++it)
     {
       std::vector<std::string>	ins;
-      ins[0] = Convert::TypeIngredientToString(it->first);
-      ins[1] = Convert::intToString(it->second);
+      ins.push_back(Convert::TypeIngredientToString(it->first));
+      ins.push_back(Convert::intToString(it->second));
       ingr.push_back(Trame::group(ins, "|"));
     }
   elms.push_back(Trame::group(ingr, "@"));
   return (Trame::pack("SendStat", elms));
+}
+
+void		Kitchen::log(const std::string &msg)
+{
+  this->c_mutex->lock();
+  //  this->log_file << "[Kitchen n" << this->kitchen_id << "]:\t[" << msg << "]" << std::endl;
+  this->c_mutex->unlock();
+}
+
+const char *Kitchen::KitchenError::what()	const throw()
+{
+  return ("[Error]:\tkitchen error");
 }

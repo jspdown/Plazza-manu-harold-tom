@@ -67,7 +67,7 @@ INC	=	-I $(INC_PATH)
 
 CC	=	g++
 
-CPPFLAGS	+=	-Wall -W -lpthread -g3 $(INC)
+CPPFLAGS	+=	-Wall -W -lpthread $(INC)
 
 
 # Rules

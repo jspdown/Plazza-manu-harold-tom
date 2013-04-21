@@ -14,7 +14,7 @@ public:
   virtual void			quit(int) = 0;
   virtual void			put(const std::string &) = 0;
   virtual std::string	  	get() = 0;
-  virtual void			setPipe(int num) = 0;
+  virtual void			setPipe(int in, int out) = 0;
 };
 
 #endif // __I_PROCESS_HH__

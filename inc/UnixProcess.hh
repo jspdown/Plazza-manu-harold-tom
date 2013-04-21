@@ -20,7 +20,7 @@ public:
   virtual void			quit(int return_value);
   virtual void			put(const std::string &);
   virtual std::string		get();
-  virtual void			setPipe(int num);
+  virtual void			setPipe(int in_fd, int out_fd);
 };
 
 #endif // __UNIX_PROCESS_HPP__

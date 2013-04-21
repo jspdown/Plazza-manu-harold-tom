@@ -21,11 +21,12 @@ void	Manager::preparePizza(const std::string &s)
   this->add_action(t);
 }
 
-void	Manager::deliverPizza()
+void	Manager::deliverPizza(NamedPipe *out)
 {
   for (size_t i = 0; i < this->ressources.size(); ++i)
     {
-      this->kitchen->sendOrder(this->ressources[i]);
+      std::cout << "delever " << this->ressources[i] << std::endl;
+      out->put(this->ressources[i]);
     }
   this->freeRessources();
 }
@@ -53,6 +54,6 @@ int	Manager::getBuzyCooks()	const
 }
 int	Manager::getPreparingPizza()	const
 {
-  return (this->actions.size());
+  return (this->actions.size() + this->nbr_current_action);
 }
 

@@ -10,7 +10,7 @@
 #include	"ThreadPool.hh"
 
 ThreadPool::ThreadPool(size_t nbr_thread) :
-  nbr_thread(nbr_thread), nbr_thread_buzy(0)
+  nbr_thread(nbr_thread), nbr_thread_buzy(0), nbr_current_action(0)
 {
   this->mutex = new UnixMutex(0);
   for (size_t i = 0; i < nbr_thread; ++i)
@@ -34,7 +34,6 @@ ThreadPool::~ThreadPool()
 
 void	ThreadPool::add_action(Task *t)
 {
-  std::cout << "add action" << std::endl;
   this->mutex->lock();
   this->actions.push_back(t);
   this->mutex->unlock();
@@ -58,20 +57,20 @@ bool	ThreadPool::run_action(size_t & id)
   if (t)
     {
       ++(this->nbr_thread_buzy);
-      this->ressources.push_back(t->run());
 
       // warning : le 0 en temps de cuisson de la pizza
+      ++(this->nbr_current_action);
       Timer    	time(3);
-      std::cout << "before kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk" << std::endl;
       this->mutexes[id]->lock();
-      std::cout << "kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk" << std::endl;
       retcode = 0;
       while (retcode == 0)
 	{
 	  retcode = this->condvars[id]->timedwait(this->mutexes[id], &time);
 	}
+      std::cout << "finished @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" << std::endl;
+      this->ressources.push_back(t->run());
       this->mutexes[id]->unlock();
-
+      --(this->nbr_current_action);
       --(this->nbr_thread_buzy);
     }
   return (true);

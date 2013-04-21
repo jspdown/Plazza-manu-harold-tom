@@ -48,6 +48,7 @@ Pizza	*PizzaHandler::build(const std::string &name, TaillePizza size)
   std::map<std::string, Pizza *>::iterator	it;
 
   it = this->pizza.find(name);
+  std::cout << name << std::endl;
   if (it == this->pizza.end())
     {
       std::cout << "pizza not found" << std::endl;

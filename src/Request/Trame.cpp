@@ -13,6 +13,7 @@ std::vector<std::string>	Trame::cut(const std::string &sub, const std::string &d
       res.push_back(op.substr(0, pos));
       op = op.substr(pos + 1);
     }
+  res.push_back(op);
   return (res);
 }
 

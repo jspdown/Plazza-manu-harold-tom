@@ -16,7 +16,7 @@ public:
   Manager	&operator=(const Manager &other);
 
   void	preparePizza(const std::string &s);
-  void	deliverPizza();
+  void	deliverPizza(NamedPipe *p);
 
   void	fillReport(std::vector<std::string> report);
 

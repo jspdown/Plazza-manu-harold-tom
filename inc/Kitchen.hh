@@ -4,10 +4,10 @@
 
 #include	<map>
 #include	<utility>
-#include	<fstream>
 #include	<exception>
 #include	"Pizza.hh"
 #include	"UnixMutex.hh"
+#include	"UnixThread.hh"
 #include	"NamedPipe.hh"
 
 class	Manager;
@@ -19,17 +19,16 @@ public:
 static UnixMutex     				*c_mutex;
 static int					c_id;
 private:
-  int						id;
   int						kitchen_id;
   int						nbr_cooks;
-  std::pair<NamedPipe *, NamedPipe *>		pipe;
   Manager					*chief;
-  std::ofstream					log_file;
+  UnixThread					thread_sender;
   std::map<TypeIngredient, int>	ingredients;
 public:
-  Kitchen(int nbr_cooks, NamedPipe *in, NamedPipe *out, int num);
+  Kitchen(int nbr_cooks, int fd_in, int fd_out, int num);
   ~Kitchen();
   Kitchen(const Kitchen &other);
+  std::pair<NamedPipe, NamedPipe>		pipe;
   Kitchen	&operator=(const Kitchen &other);
   
   void	close();
@@ -41,6 +40,9 @@ public:
   std::string	buildStat();
   void		run();
   void		log(const std::string &msg);
+  int		getNbrPizzaPossible();
+  Manager	*getChief();
+
   class	KitchenError: public std::exception
   {
 const char *what()	const throw();

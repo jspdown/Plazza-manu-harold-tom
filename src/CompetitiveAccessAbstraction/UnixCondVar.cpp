@@ -28,6 +28,7 @@ int	UnixCondVar::wait(IMutex *mutex)
 
 int	UnixCondVar::timedwait(IMutex *mutex, Timer *time)
 {
+  //  pthread_cond_init(&(this->condvar), NULL);
   return pthread_cond_timedwait(&(this->condvar), mutex->getMutex(), time->getTime());
 }
 

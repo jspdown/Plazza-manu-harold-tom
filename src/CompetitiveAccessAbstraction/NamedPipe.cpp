@@ -1,3 +1,5 @@
+
+#include <sys/select.h>
 #include <iostream>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -35,13 +37,14 @@ NamedPipe::~NamedPipe()
 {
 }
 
+
 std::string	NamedPipe::get()
 {
   char	buff[READ_SIZE + 1];
   int	size;
   bool	done = false;
   std::string	line("");
-
+  
   while (!done && (size = read(this->fd, buff, READ_SIZE)) > 0)
     {
       if (buff[0] == '\n')

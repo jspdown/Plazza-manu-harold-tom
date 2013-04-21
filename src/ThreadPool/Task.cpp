@@ -17,7 +17,6 @@ Task::~Task()
 
 std::string	Task::run()
 {
-  std::cout << "action run " << std::endl;
   return (((this)->*(this->foo))(this->arg));
 }
 
@@ -28,7 +27,6 @@ std::string	Task::getArg()	const
 
 std::string	Task::preparePizza(const std::string &arg)
 {
-  std::cout << "preparing pizza ... ou pas" << std::endl;
-
+  std::cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
   return (arg);
 }

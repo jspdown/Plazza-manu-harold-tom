@@ -15,6 +15,7 @@ class	ThreadPool
 protected:
   unsigned int			nbr_thread;
   unsigned int			nbr_thread_buzy;
+  unsigned int			nbr_current_action;
   IMutex			*mutex;
   std::deque<Task *>		actions;
   std::deque<std::string>      	ressources;

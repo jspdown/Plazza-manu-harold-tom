@@ -28,8 +28,7 @@ NamedPipe::NamedPipe(const std::string &name)
     }
 }
 NamedPipe::NamedPipe(int fd) :
-  fd(fd),
-  name("")
+  fd(fd)
 {
 }
 

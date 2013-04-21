@@ -97,7 +97,6 @@ void	Reception::applyOutput()
 		    {
 		      this->ressources.pop_front();
 		      _v.push_back(i);
-		      //this->pipe.erase(i);
  		      close(fd_in);
  		      close(fd_out);
 		      std::cout << "Pip end" << std::endl;
@@ -106,6 +105,8 @@ void	Reception::applyOutput()
 	      while (_v.size())
 		{
 		  std::cout << "pop" << std::endl;
+		  delete (*(_v.back()))->first;
+		  delete (*(_v.back()))->second;
 		  this->pipe.erase(_v.back());
 		  _v.pop_back();
 		}

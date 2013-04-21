@@ -39,7 +39,7 @@ void	Reception::createKitchen()
   std::stringstream			nameout;
   std::pair<NamedPipe *, NamedPipe *>	*pipes;
   IProcess *				son;
-  
+
   std::cout << "create kitchen" << std::endl;
   namein << "InputKitchen" << num;
   nameout << "OutputKitchen" << num;
@@ -50,7 +50,7 @@ void	Reception::createKitchen()
   if ((son = this->process->fork()))
     {
       son->setPipe(in->getFd(), out->getFd());
-      Kitchen * k = new Kitchen(this->nbr_cooks, pipes->first, pipes->second);
+      Kitchen * k = new Kitchen(this->nbr_cooks, pipes->first, pipes->second, num);
       k->run();
       this->processes.push_back(son);
     }

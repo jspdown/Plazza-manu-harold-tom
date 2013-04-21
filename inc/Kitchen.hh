@@ -19,6 +19,7 @@ public:
 static UnixMutex     				*c_mutex;
 static int					c_id;
 private:
+  int						id;
   int						kitchen_id;
   int						nbr_cooks;
   std::pair<NamedPipe *, NamedPipe *>		pipe;
@@ -26,7 +27,7 @@ private:
   std::ofstream					log_file;
   std::map<TypeIngredient, int>	ingredients;
 public:
-  Kitchen(int nbr_cooks, NamedPipe *in, NamedPipe *out);
+  Kitchen(int nbr_cooks, NamedPipe *in, NamedPipe *out, int num);
   ~Kitchen();
   Kitchen(const Kitchen &other);
   Kitchen	&operator=(const Kitchen &other);

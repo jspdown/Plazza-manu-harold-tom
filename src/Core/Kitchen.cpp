@@ -5,11 +5,9 @@
 #include	"Manager.hh"
 #include	"Kitchen.hh"
 
-int		Kitchen::c_id = 0;
 UnixMutex	*Kitchen::c_mutex = new UnixMutex(0);
 
-
-Kitchen::Kitchen(int nbr_cooks, NamedPipe *in, NamedPipe *out) :
+Kitchen::Kitchen(int nbr_cooks, NamedPipe *in, NamedPipe *out, int id) :
   nbr_cooks(nbr_cooks), pipe(std::pair<NamedPipe *, NamedPipe *>(in, out)), chief(new Manager(nbr_cooks, this)), log_file("kitchen_report", std::ifstream::out | std::ifstream::trunc)
 {
   this->ingredients[Doe] = 5;
@@ -21,10 +19,9 @@ Kitchen::Kitchen(int nbr_cooks, NamedPipe *in, NamedPipe *out) :
   this->ingredients[Steak] = 5;
   this->ingredients[Tomato] = 5;
   this->ingredients[ChiefLove] = 5;
-  this->kitchen_id = this->c_id;
+  this->kitchen_id = id;
   if (!this->log_file.good())
     throw Kitchen::KitchenError();
-  c_id++;
 }
 
 Kitchen::~Kitchen()
@@ -117,7 +114,7 @@ std::string	Kitchen::buildStat()
   int	free_cooks = this->chief->getFreeCooks();
   int	buzy_cooks = this->chief->getBuzyCooks();
   int	possible_pizza = this->nbr_cooks * 2 - this->chief->getPreparingPizza();
-  
+
   std::vector<std::string>	elms;
   std::vector<std::string>	ingr;
 
@@ -125,7 +122,7 @@ std::string	Kitchen::buildStat()
   elms.push_back(Convert::intToString(buzy_cooks));
   elms.push_back(Convert::intToString(possible_pizza));
   this->chief->fillReport(elms);
-  
+
   for (std::map<TypeIngredient, int>::const_iterator it = this->ingredients.begin(); it != this->ingredients.end(); ++it)
     {
       std::vector<std::string>	ins;
@@ -139,9 +136,14 @@ std::string	Kitchen::buildStat()
 
 void		Kitchen::log(const std::string &msg)
 {
-  this->c_mutex->lock();
-  this->log_file << "[Kitchen n" << this->kitchen_id << "]:\t[" << msg << "]" << std::endl;
-  this->c_mutex->unlock();
+  if(!msg.empty())
+    {
+      std::cout << this->kitchen_id << std::endl;
+      this->c_mutex->lock();
+      std::cout << "[Kitchen n" << this->kitchen_id << "]:\t[" << msg << "]" << std::endl;
+      this->log_file << "[Kitchen n" << this->kitchen_id << "]:\t[" << msg << "]" << std::endl;
+      this->c_mutex->unlock();
+    }
 }
 
 const char *Kitchen::KitchenError::what()	const throw()

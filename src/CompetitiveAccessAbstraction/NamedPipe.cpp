@@ -4,6 +4,8 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <string.h>
+#include <string.h>
+#include <errno.h>
 
 #include "NamedPipe.hh"
 
@@ -13,6 +15,7 @@ NamedPipe::NamedPipe(const std::string &name)
   if (mkfifo(name.c_str(), S_IRWXU) < 0)
     {
       std::cout << "error fifo" << std::endl;
+      perror(strerror(errno));
       throw NamedPipe::NamedPipeError();
     }
   this->fd = open(name.c_str(), O_RDWR | O_CREAT);
@@ -38,7 +41,7 @@ std::string	NamedPipe::get()
   int	size;
   bool	done = false;
   std::string	line("");
-    
+
   while (!done && (size = read(this->fd, buff, READ_SIZE)) > 0)
     {
       if (buff[0] == '\n')

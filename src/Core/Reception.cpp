@@ -59,7 +59,7 @@ void	Reception::fillRessources()
 {
   for (size_t i = 0; i < this->pipe.size(); ++i)
     {
-      std::string	trame = this->pipe[i]->second->get();
+      std::string	trame = this->pipe.at(i)->second->get();
 
       if (trame != "")
 	{

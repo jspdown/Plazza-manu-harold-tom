@@ -29,6 +29,8 @@ public:
   bool	run_action(size_t &);
   int	getNbrThread()	const;
   int	getNbrThreadBuzy()	const;
+  std::deque<std::string>	getRessources()	const;
+  void			freeRessources();
 };
 
 class	Arg

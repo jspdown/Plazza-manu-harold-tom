@@ -24,7 +24,10 @@ void	Manager::preparePizza(const std::string &s)
 void	Manager::deliverPizza()
 {
   for (size_t i = 0; i < this->ressources.size(); ++i)
-    this->kitchen->sendOrder(this->ressources[i]);
+    {
+      this->kitchen->sendOrder(this->ressources[i]);
+    }
+  this->freeRessources();
 }
 
 void	Manager::fillReport(std::vector<std::string> report)

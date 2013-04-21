@@ -7,11 +7,13 @@
 #include	"IProcess.hh"
 #include	"InputOutput.hh"
 #include	"NamedPipe.hh"
+#include	"UnixThread.hh"
 #include	"Pizza.hh"
 
 class Reception
 {
 private:
+  UnixThread						delivery_man;
   IProcess						*process;
   int							nbr_cooks;
   InputOutput						io;
@@ -27,6 +29,7 @@ public:
   void	destroyKitchen(int);
   void	getOrder();
   int	checkStatus() const;
+  void	getPizza();
 };
 
 #endif // __RECEPTION_HH__

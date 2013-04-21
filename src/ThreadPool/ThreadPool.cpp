@@ -1,3 +1,5 @@
+
+#include	<iostream>
 #include	<sys/time.h>
 #include	<vector>
 #include	"Task.hh"
@@ -31,6 +33,7 @@ ThreadPool::~ThreadPool()
 
 void	ThreadPool::add_action(Task *t)
 {
+  std::cout << "add action" << std::endl;
   this->mutex->lock();
   this->actions.push_back(t);
   this->mutex->unlock();
@@ -58,7 +61,9 @@ bool	ThreadPool::run_action(size_t & id)
 
       // warning : le 0 en temps de cuisson de la pizza
       Timer    	time(3);
+      std::cout << "before kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk" << std::endl;
       this->mutexes[id]->lock();
+      std::cout << "kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk" << std::endl;
       retcode = 0;
       while (retcode == 0)
 	{
@@ -68,7 +73,7 @@ bool	ThreadPool::run_action(size_t & id)
 
       --(this->nbr_thread_buzy);
     }
-  return (ret);
+  return (true);
 }
 
 int	ThreadPool::getNbrThread()	const
@@ -93,4 +98,13 @@ Arg::Arg(ThreadPool *pool, size_t id)
   : pool(pool),
     id(id)
 {
+}
+std::deque<std::string>	ThreadPool::getRessources() const 
+{
+  return (this->ressources);
+}
+
+void			ThreadPool::freeRessources()
+{
+  this->ressources.clear();
 }

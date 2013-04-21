@@ -7,7 +7,7 @@ Task::Task(const std::string &name, const std::string &arg)
 {
   this->functions[std::string("preparePizza")] = &Task::preparePizza;
   this->arg = arg;
-  this->foo = this->functions[name];
+  this->foo = &Task::preparePizza;//this->functions[name];
 }
 
 Task::~Task()
@@ -17,6 +17,7 @@ Task::~Task()
 
 std::string	Task::run()
 {
+  std::cout << "action run " << std::endl;
   return (((this)->*(this->foo))(this->arg));
 }
 

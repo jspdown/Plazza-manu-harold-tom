@@ -137,10 +137,10 @@ std::string	Kitchen::buildStat()
   return (Trame::pack("SendStat", elms));
 }
 
-void		Kitchen::log(const std::string &)
+void		Kitchen::log(const std::string &msg)
 {
   this->c_mutex->lock();
-  //  this->log_file << "[Kitchen n" << this->kitchen_id << "]:\t[" << msg << "]" << std::endl;
+  this->log_file << "[Kitchen n" << this->kitchen_id << "]:\t[" << msg << "]" << std::endl;
   this->c_mutex->unlock();
 }
 

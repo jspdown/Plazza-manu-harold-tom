@@ -4,17 +4,28 @@
 #include <utility>
 
 #include "Trame.hh"
+#include "Convert.hh"
 #include "CmdLineParse.hh"
+#include "PizzaHandler.hh"
 #include "Reception.hh"
 #include "UnixProcess.hh"
 #include "IProcess.hh"
 #include "Kitchen.hh"
 #include "InputOutput.hh"
 
+void	*delivery(void *data)
+{
+  Reception	*tp = reinterpret_cast<Reception *>(data);
+  tp->getPizza();
+  return (0);
+}
+
 Reception::Reception(int nbr_cooks)
-  : process(new UnixProcess()),
+  : delivery_man(UnixThread(0, delivery, reinterpret_cast<void *>(this), 0)),
+    process(new UnixProcess()),
     nbr_cooks(nbr_cooks)
 {
+  
 }
 
 Reception::~Reception()
@@ -49,14 +60,13 @@ void	Reception::createKitchen()
 void	Reception::deliverPizza(Pizza *pizza)
 {
   std::stringstream	msg;
-
+  
   msg << "Service d'une "
       << pizza->getName()
       << " "
       << pizza->getSizeText()
       << std::endl;
   this->io.write(msg.str());
-  pizza->Pizza::~Pizza();
 }
 
 void	Reception::run()
@@ -73,6 +83,21 @@ void	Reception::run()
 void	Reception::destroyKitchen(int pos)
 {
   this->pipe.erase(this->pipe.begin() + pos);
+}
+
+void	Reception::getPizza()
+{
+  PizzaHandler		hp;
+
+  for (size_t i = 0; i < this->pipe.size(); ++i)
+    {
+      std::string	res;
+
+      res = this->pipe[i]->second->get();
+      std::vector<std::string>	r = Trame::unpack(res);
+      if (r.size() == 3 && Trame::getCmd(r[0]) == "GetPizza")
+	this->deliverPizza(hp.build(r[0], Convert::stringToTaillePizza(r[2])));
+    }
 }
 
 void	Reception::getOrder()
@@ -92,8 +117,6 @@ void	Reception::getOrder()
 	  this->createKitchen();
 	  pos = this->checkStatus();
 	}
-      msgstream  << tramecmd[i] << std::endl;
-      this->io.write(msgstream.str());
       this->pipe[pos]->first->put(tramecmd[i]);
     }
 }

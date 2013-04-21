@@ -3,7 +3,7 @@
 #include	<iostream>
 #include	<vector>
 #include	<string>
-
+#include	<unistd.h>
 #include	"Convert.hh"
 #include	"CmdLineParse.hh"
 #include	"Trame.hh"
@@ -21,6 +21,7 @@ void	*delivery(void *data)
   while (!done)
     {
       rp->fillRessources();
+      usleep(50);
     }
   return (0);
 }
@@ -33,10 +34,10 @@ void	*reader_action(void *data)
   while (!done)
     {
       rp->applyOutput();
-    }
+      usleep(50);
+   }
   return (0);
 }
-
 
 Reception::Reception(int nbr_cooks) :
   delivery_man(0, delivery, reinterpret_cast<void *>(this), 0), process(new UnixProcess()), nbr_cooks(nbr_cooks)
@@ -70,6 +71,7 @@ void	Reception::fillRessources()
 void	Reception::applyOutput()
 {
   std::string	res;
+  std::vector<std::deque<std::pair<NamedPipe *, NamedPipe *> *>::iterator>	_v;
 
   if (!this->ressources.empty())
     {
@@ -90,15 +92,24 @@ void	Reception::applyOutput()
 
 	      for (std::deque<std::pair<NamedPipe *, NamedPipe *> *>::iterator i = this->pipe.begin(); i != this->pipe.end(); ++i)
 		{
+		  std::cout << "for" << std::endl;
 		  if ((*i)->first->getFd() == fd_in && (*i)->second->getFd() == fd_out)
 		    {
-		      this->pipe.erase(i);
+		      this->ressources.pop_front();
+		      _v.push_back(i);
+		      //this->pipe.erase(i);
  		      close(fd_in);
  		      close(fd_out);
-		      this->ressources.pop_front();
 		      std::cout << "Pip end" << std::endl;
 		    }
 		}
+	      while (_v.size())
+		{
+		  std::cout << "pop" << std::endl;
+		  this->pipe.erase(_v.back());
+		  _v.pop_back();
+		}
+	      std::cout << "out" << std::endl;
 	    }
 	}
        else if (Trame::getCmd(msg) != "SendStat")

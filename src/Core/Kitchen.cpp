@@ -38,14 +38,16 @@ Kitchen::~Kitchen()
 
 }
 
+
 void	Kitchen::run()
 {
   bool	done = false;
   std::string	trame;
   std::string	cmd;
-
+  t = now();
   while (!done)
     {
+      
       trame = getOrder();
       std::vector<std::string>	untrame = Trame::unpack(trame);
       if (untrame.size() > 0)
@@ -56,6 +58,7 @@ void	Kitchen::run()
 	  else if (cmd == "GetPizza")
 	    this->chief->preparePizza(trame);
 	}
+      nt = now();
     }
 }
 

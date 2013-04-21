@@ -32,13 +32,17 @@ void	Kitchen::run()
   while (!done)
     {
       trame = getOrder();
-      if (Trame::unpack(trame)[0] == "GetStat")
-	sendOrder(buildStat());
-      else if (Trame::unpack(trame)[0] == "GetPizza")
-	this->chief->preparePizza(trame);
-      else
-	std::cout << "unknow cmd" << std::endl;
-      this->chief->deliverPizza();
+      std::vector<std::string>	untrame = Trame::unpack(trame);
+      if (untrame.size() > 0)
+	{
+	  if (untrame[0] == "GetStat")
+	    sendOrder(buildStat());
+	  else if (Trame::unpack(trame)[0] == "GetPizza")
+	    this->chief->preparePizza(trame);
+	  else
+	    std::cout << "unknow cmd" << std::endl;
+	  this->chief->deliverPizza();
+	}
     }
 }
 

@@ -15,7 +15,7 @@ private:
   IProcess						*process;
   int							nbr_cooks;
   //  InputOutput						io;
-  std::deque<std::pair<NamedPipe *, NamedPipe *> >	pipe;
+  std::deque<std::pair<NamedPipe *, NamedPipe *> *>	pipe;
   std::deque<IProcess *>				processes;
 
 public:

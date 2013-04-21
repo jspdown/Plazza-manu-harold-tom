@@ -24,21 +24,25 @@ void	Reception::createKitchen()
   static int				num;
   std::stringstream			namein;
   std::stringstream			nameout;
-  std::pair<NamedPipe *, NamedPipe *>	pipes;
+  std::pair<NamedPipe *, NamedPipe *>	*pipes;
   IProcess *				son;
 
   namein << "InputKitchen" << num;
   nameout << "OutputKitchen" << num;
-  NamedPipe in(namein.str());
-  NamedPipe out(nameout.str());
-  pipes = std::make_pair(&in, &out);
+  NamedPipe *in = new NamedPipe(namein.str());
+  NamedPipe *out = new NamedPipe(nameout.str());
+  pipes = new std::pair<NamedPipe *, NamedPipe *>(in, out);
   this->pipe.push_back(pipes);
   if ((son = this->process->fork()))
     {
       son->setPipe(pipes);
+<<<<<<< HEAD
+      Kitchen * k = new Kitchen(this->nbr_cooks, pipes->first, pipes->second);
+=======
       Kitchen * k = new Kitchen(this->nbr_cooks, pipes.first, pipes.second);
       if (!k)
 	throw std::exception(); //warning
+>>>>>>> 5e075538e52c1ab82826e6a62cd004cbe3665705
       k->run();
       this->processes.push_back(son);
     }
@@ -88,7 +92,7 @@ void	Reception::getOrder()
 	  pos = this->checkStatus();
 	}
       std::cout << tramecmd[i] << std::endl;
-      this->pipe[pos].first->put(tramecmd[i]);
+      this->pipe[pos]->first->put(tramecmd[i]);
     }
 }
 
@@ -102,10 +106,10 @@ int	Reception::checkStatus() const
   packedtrame = Trame::pack("GetStat", trame);
   for (i = 0; i < this->pipe.size(); i += 1)
     {
-      (this->pipe[i].first)->put(packedtrame);
-      answer = (this->pipe[i].second)->get();
+      (this->pipe[i]->first)->put(packedtrame);
+      answer = (this->pipe[i]->second)->get();
       while (answer.empty())
-	answer = (this->pipe[i].second)->get();
+	answer = (this->pipe[i]->second)->get();
       trame = Trame::unpack(answer);
       if (trame.size() >= 3 && trame[2].compare("0") != 0)
 	return i;

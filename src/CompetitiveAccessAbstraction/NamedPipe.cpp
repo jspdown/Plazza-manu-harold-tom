@@ -11,11 +11,10 @@ NamedPipe::NamedPipe(const std::string &name)
 {
   std::cout << name << std::endl;
   if (mkfifo(name.c_str(), S_IRWXU) < 0)
-    throw NamedPipe::NamedPipeError(); //warning
+    throw NamedPipe::NamedPipeError();
   this->file.open(name.c_str(), std::fstream::in | std::fstream::out | std::fstream::trunc);
   if (!this->file.good())
     throw NamedPipe::NamedPipeError();
-  this->file << "lalal" << std::endl;
 }
 
 NamedPipe::~NamedPipe()

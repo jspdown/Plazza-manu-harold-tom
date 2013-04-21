@@ -2,4 +2,4 @@
 
 rm InputKitchen*
 rm OutputKitchen*
-rm kitchen_report
+rm kitchen_log

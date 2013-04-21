@@ -30,7 +30,6 @@ NamedPipe::NamedPipe(const std::string &name)
 NamedPipe::NamedPipe(int fd) :
   fd(fd)
 {
-
 }
 
 NamedPipe::~NamedPipe()
@@ -44,7 +43,7 @@ std::string	NamedPipe::get()
   int	size;
   bool	done = false;
   std::string	line("");
-  
+
   while (!done && (size = read(this->fd, buff, READ_SIZE)) > 0)
     {
       if (buff[0] == '\n')

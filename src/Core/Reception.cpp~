@@ -93,8 +93,8 @@ void	Reception::applyOutput()
 		  if ((*i)->first->getFd() == fd_in && (*i)->second->getFd() == fd_out)
 		    {
 		      this->pipe.erase(i);
- 		      close(fd_in);
- 		      close(fd_out);
+// 		      close(fd_in);
+// 		      close(fd_out);
 		      this->ressources.pop_front();
 		      std::cout << "Pip end" << std::endl;
 		    }

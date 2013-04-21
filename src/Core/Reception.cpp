@@ -148,8 +148,16 @@ std::vector<std::string>	Reception::getCmdLine()
   std::vector<std::string>	res;
 
   std::getline(std::cin, msg);
-  res = CmdLineParse::CmdLineToTrame(msg);
-  return (res);
+  try
+    {
+      res = CmdLineParse::CmdLineToTrame(msg);
+      return (res);	
+    }
+  catch (CmdLineParse::SyntaxError s)
+    {
+      std::cout << "Syntaxe Error" << std::endl;
+    }
+  return (this->getCmdLine());
 }
 
 std::string	Reception::searchTrame(const std::string &seek)

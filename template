@@ -1,8 +1,0 @@
- struct Kitchen
-  {
-    int free_cook;
-    int busy_cook;
-    int pizza_available;
-    std::map<std::pair<TypePizza, TaillePizza>, int>      pizza;
-    std::map<TypeIngredient, int>                         ingredient;
-  };

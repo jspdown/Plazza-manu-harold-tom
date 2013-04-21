@@ -9,9 +9,11 @@
 #include "UnixProcess.hh"
 #include "IProcess.hh"
 #include "Kitchen.hh"
+#include "InputOutput.hh"
 
 Reception::Reception(int nbr_cooks)
-  : process(new UnixProcess()), nbr_cooks(nbr_cooks)
+  : process(new UnixProcess()),
+    nbr_cooks(nbr_cooks)
 {
 }
 
@@ -43,14 +45,16 @@ void	Reception::createKitchen()
   num += 1;
 }
 
-void	Reception::deliverPizza(Pizza *pizza) const
+void	Reception::deliverPizza(Pizza *pizza)
 {
-  // warning : utiliser attribut io
-  std::cout << "Service d'une "
-	    << pizza->getName()
-	    << " "
-	    << pizza->getSizeText()
-	    << std::endl;
+  std::stringstream	msg;
+
+  msg << "Service d'une "
+      << pizza->getName()
+      << " "
+      << pizza->getSizeText()
+      << std::endl;
+  this->io.write(msg.str());
   pizza->Pizza::~Pizza();
 }
 
@@ -75,6 +79,7 @@ void	Reception::getOrder()
   int				pos;
   std::string			msg;
   std::vector<std::string>	tramecmd;
+  std::stringstream		msgstream;
 
   std::getline (std::cin, msg);
   tramecmd = CmdLineParse::CmdLineToTrame(msg);
@@ -85,7 +90,8 @@ void	Reception::getOrder()
 	  this->createKitchen();
 	  pos = this->checkStatus();
 	}
-      std::cout << tramecmd[i] << std::endl;
+      msgstream  << tramecmd[i] << std::endl;
+      this->io.write(msgstream.str());
       this->pipe[pos]->first->put(tramecmd[i]);
     }
 }

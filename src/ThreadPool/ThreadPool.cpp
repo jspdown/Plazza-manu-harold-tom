@@ -57,7 +57,7 @@ bool	ThreadPool::run_action(size_t & id)
       this->ressources.push_back(t->run());
 
       // warning : le 0 en temps de cuisson de la pizza
-      Timer    	time(0);
+      Timer    	time(3);
       this->mutexes[id]->lock();
       retcode = 0;
       while (retcode == 0)

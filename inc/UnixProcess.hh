@@ -10,12 +10,8 @@ class UnixProcess : public IProcess
 {
 private:
   pid_t					pid;
-<<<<<<< HEAD
-  std::pair<NamedPipe *, NamedPipe *>	pipes;
   int					id;
-=======
   std::pair<NamedPipe *, NamedPipe *>	*pipes;
->>>>>>> 07a1b3d746b6c16d7a6916f44437ea8da565919a
 
 public:
 				UnixProcess();

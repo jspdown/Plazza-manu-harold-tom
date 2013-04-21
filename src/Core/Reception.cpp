@@ -36,13 +36,7 @@ void	Reception::createKitchen()
   if ((son = this->process->fork()))
     {
       son->setPipe(pipes);
-<<<<<<< HEAD
       Kitchen * k = new Kitchen(this->nbr_cooks, pipes->first, pipes->second);
-=======
-      Kitchen * k = new Kitchen(this->nbr_cooks, pipes.first, pipes.second);
-      if (!k)
-	throw std::exception(); //warning
->>>>>>> 5e075538e52c1ab82826e6a62cd004cbe3665705
       k->run();
       this->processes.push_back(son);
     }

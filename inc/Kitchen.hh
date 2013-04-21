@@ -24,12 +24,12 @@ private:
   UnixThread					*thread_counter;
   Manager					*chief;
   UnixThread					thread_sender;
-  std::map<TypeIngredient, int>	ingredients;
 public:
   Kitchen(int nbr_cooks, int fd_in, int fd_out, int num);
   ~Kitchen();
   Kitchen(const Kitchen &other);
   std::pair<NamedPipe, NamedPipe>		pipe;
+  std::map<TypeIngredient, int>	ingredients;
   Kitchen	&operator=(const Kitchen &other);
 
   void	close();

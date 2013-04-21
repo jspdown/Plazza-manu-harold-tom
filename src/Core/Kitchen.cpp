@@ -26,6 +26,7 @@ void	*counter(void *data)
   Timer	*beg = new Timer(5);
   bool	done = false;
   Timer *now = new Timer(0);
+  Timer *base = new Timer(0);
 
   while (!done)
     {
@@ -33,6 +34,20 @@ void	*counter(void *data)
 	{
 	  delete beg;
 	  beg = new Timer(5);
+	}
+      if (base->getTime()->tv_sec == now->getTime()->tv_sec)
+	{
+	  delete base;
+	  base = new Timer(0);
+	  k->ingredients[Doe] += 1;
+	  k->ingredients[Eggplant] += 1;
+	  k->ingredients[Goat_cheese] += 1;
+	  k->ingredients[Gruyere] += 1;
+	  k->ingredients[Ham] += 1;
+	  k->ingredients[Mushroom] += 1;
+	  k->ingredients[Steak] += 1;
+	  k->ingredients[Tomato]  += 1;
+	  k->ingredients[ChiefLove]  += 1;
 	}
       if (beg->getTime()->tv_sec == now->getTime()->tv_sec)
 	{

@@ -21,6 +21,7 @@ static int					c_id;
 private:
   int						kitchen_id;
   int						nbr_cooks;
+  UnixThread					*thread_counter;
   Manager					*chief;
   UnixThread					thread_sender;
   std::map<TypeIngredient, int>	ingredients;
@@ -30,7 +31,7 @@ public:
   Kitchen(const Kitchen &other);
   std::pair<NamedPipe, NamedPipe>		pipe;
   Kitchen	&operator=(const Kitchen &other);
-  
+
   void	close();
   std::string	getOrder();
   void		sendOrder(const std::string &);
@@ -42,6 +43,7 @@ public:
   void		log(const std::string &msg);
   int		getNbrPizzaPossible();
   Manager	*getChief();
+  void		throwCounter();
 
   class	KitchenError: public std::exception
   {

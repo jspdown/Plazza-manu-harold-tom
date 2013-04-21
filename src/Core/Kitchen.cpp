@@ -1,5 +1,7 @@
 
+#include	<sstream>
 #include	<iostream>
+#include	"Time.hh"
 #include	"Trame.hh"
 #include	"Convert.hh"
 #include	"Manager.hh"
@@ -16,6 +18,34 @@ void	*sender(void *data)
       k->getChief()->deliverPizza(&(k->pipe.second));
     }
   return (0);
+}
+
+void	*counter(void *data)
+{
+  Kitchen	*k = reinterpret_cast<Kitchen *>(data);
+  Timer	*beg = new Timer(5);
+  bool	done = false;
+  Timer *now = new Timer(0);
+
+  while (!done)
+    {
+      if (k->getChief()->getBuzyCooks() != 0)
+	{
+	  delete beg;
+	  beg = new Timer(5);
+	}
+      if (beg->getTime()->tv_sec == now->getTime()->tv_sec)
+	{
+	  k->close();
+	  done = true;
+	}
+      else
+	{
+	  delete now;
+	  now = new Timer(0);
+	}
+    }
+  return 0;
 }
 
 Kitchen::Kitchen(int nbr_cooks, int fd_in, int fd_out, int id) :
@@ -39,14 +69,20 @@ Kitchen::~Kitchen()
 }
 
 
+void	Kitchen::throwCounter()
+{
+  this->thread_counter = new UnixThread(0, counter, reinterpret_cast<void *>(this), 0);
+}
+
 void	Kitchen::run()
 {
   bool	done = false;
   std::string	trame;
   std::string	cmd;
 
+  this->throwCounter();
   while (!done)
-    {      
+    {
       trame = getOrder();
       std::vector<std::string>	untrame = Trame::unpack(trame);
       if (untrame.size() > 0)
@@ -62,7 +98,11 @@ void	Kitchen::run()
 
 void	Kitchen::close()
 {
-  std::cout << "close" << std::endl;
+  std::stringstream	cmd;
+
+  cmd << "Destroy:" << this->pipe.first.getFd() << ":" << this->pipe.second.getFd() << std::endl;
+  this->sendOrder(cmd.str());
+  this->Kitchen::~Kitchen();
 }
 
 std::string	Kitchen::getOrder()
@@ -139,7 +179,7 @@ void		Kitchen::log(const std::string &msg)
       str.append(msg);
       str.append("]\n");
       std::vector<std::string>	ret;
-      
+
       ret.push_back(str);
       this->c_mutex->lock();
       this->sendOrder(Trame::pack(cmd, ret));

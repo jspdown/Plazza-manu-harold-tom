@@ -31,7 +31,7 @@ void	*reader_action(void *data)
 
   while (!done)
     {
-      rp->applyOutput(); 
+      rp->applyOutput();
     }
   return (0);
 }
@@ -45,7 +45,7 @@ Reception::Reception(int nbr_cooks) :
 
 Reception::~Reception()
 {
-  
+
 }
 
 void		Reception::throwReader()
@@ -58,7 +58,7 @@ void	Reception::fillRessources()
   for (size_t i = 0; i < this->pipe.size(); ++i)
     {
       std::string	trame = this->pipe[i]->second->get();
-     
+
       if (trame != "")
 	{
 	  this->ressources.push_back(trame);
@@ -89,7 +89,7 @@ void	Reception::createKitchen()
   std::stringstream			nameout;
   std::pair<NamedPipe *, NamedPipe *>	*pipes;
   IProcess				*son;
-  
+
   namein << "InputKitchen" << num;
   nameout << "OutputKitchen" << num;
   NamedPipe *in = new NamedPipe(namein.str());
@@ -106,7 +106,7 @@ void	Reception::createKitchen()
     }
     ++num;
 }
-  
+
 std::vector<std::string>	Reception::getCmdLine()
 {
   std::string	msg("");
@@ -122,7 +122,7 @@ std::string	Reception::searchTrame(const std::string &seek)
   std::deque<std::string>::iterator it = this->ressources.begin();
   std::deque<std::string>::iterator tmp;
   std::string			    answer;
-  
+
   while (it != this->ressources.end())
     {
       if (Trame::getCmd(*it) == seek)
